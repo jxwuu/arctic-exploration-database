@@ -3,16 +3,33 @@
         <h1>304 Artic Expedition</h1>
 
         <!--  type of button? -->
-        <form method="POST" action="304project.php"> <!-- action reloads page to this project again-->
+        <form method="POST" action="ArcticExpedition.php"> <!-- action reloads page to this project again-->
             <input type="hidden" id="initializeTables" name="initializeTables">
             <p><input type="submit" value="INITIALIZE TABLE" name="initializeTables"></p>
             <!--     form button      text on button as        name of this object -->
+        </form>
+
+        <form method="POST" action="ArcticExpedition.php">
+            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
+            <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
+            <p><input type="submit" value="Reset" name="reset"></p>
+        </form>
+
+        <h2>Count the Tuples in DemoTable</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="countTupleRequest" name="countTupleRequest">
+            <input type="submit" name="countTuples"></p>
+        </form>
+
+        <h2>Display the Tuples in DemoTable</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
+            <input type="submit" name="displayTuples"></p>
         </form>
     </body>
 
 
 	<?php
-        echo "Hello world <br>";
         /** SETTING UP OVERHEAD FOR ORACLE */
         
         $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -59,7 +76,7 @@
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_benson0", "a28598183", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_wuangus", "a37588688", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -89,8 +106,11 @@
         function handleInitializeAllTables() {
             global $db_conn;
 
-            echo "<br> creating new person table <br>";
-            executePlainSQL("CREATE TABLE Person (pid int PRIMARY KEY, age int, name char(50) NOT NULL, gender char(50), weight int, height int)");
+            echo "<br> inserting <br>";
+            executePlainSQL("INSERT INTO Person 
+            VALUES(9119119, 25, 'John', 'male', 87, 188) 
+            ");
+
             OCICommit($db_conn);
         }
 
@@ -101,29 +121,76 @@
             if (connectToDB()) {
                 if (array_key_exists('initializeTables', $_POST)) {
                     handleInitializeAllTables();
+                } else if (array_key_exists('resetTablesRequest', $_POST)) {
+                    handleResetRequest();
                 }
+
+                disconnectFromDB();
             }
         }
 
-        /**
-         * Deals with buttons
-         */
-        function handleGETRequest() {
-            if (connectToDB()) {
+        function handleResetRequest() {
+            global $db_conn;
+            // Drop old table
+            executePlainSQL("DROP TABLE Person");
+
+            // Create new table
+            echo "<br> creating new table <br>";
+            executePlainSQL("CREATE TABLE Person (
+                PersonID integer, 
+                Age integer,
+                Name char(50) NOT NULL,
+                Gender char(50),
+                Weight integer,
+                Height integer, 
+                PRIMARY KEY (PersonID)
+            )");
+            OCICommit($db_conn);
+        }
+
+        function handleCountRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT Count(*) FROM Person");
+
+            if (($row = oci_fetch_row($result)) != false) {
+                echo "<br> The number of tuples in Person: " . $row[0] . "<br>";
+            }
+        }
+
+        function handleDisplayRequest() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT * FROM Person");
+
+                echo "<br> <b> ID </b>" . str_repeat('&nbsp;', 6) . "<b> Name </b> <br>";
+
+            while (($row = oci_fetch_row($result)) != false) {
+                echo "<br>" . $row[0] . str_repeat('&nbsp;', 10) . $row[1] . "<br>";
+            }
+        }
+
+ // HANDLE ALL GET ROUTES
+	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
+    function handleGETRequest() {
+        if (connectToDB()) {
+            if (array_key_exists('countTuples', $_GET)) {
+                handleCountRequest();
             }
 
+            if (array_key_exists('displayTuples', $_GET)) {
+                handleDisplayRequest();
+            }
+
+            disconnectFromDB();
         }
+    }
 
-
-
-        /**
-         * handles all requests (like a trampoline?)
-         */
-        if (isset($_POST['initializeTables'])) {
-            handlePOSTRequest();
-        } else {
-            handleGETRequest();
-        }
-
-	?>
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables'])) {
+        handlePOSTRequest();
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
+        handleGETRequest();
+    }
+    ?>
+</body>
 </html>
