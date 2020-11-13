@@ -26,6 +26,30 @@
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
+
+        <h2>Select from Persons</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <label for="Name"> Identifying Features: </label>
+            <select name="attribute1" id="attribute1">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <select name="attribute2" id="attribute2">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <input type="hidden" id="selectionRequest" name="selectionRequest">
+            <input type="submit" name="selection"></p>
+        </form>
+
     </body>
 
 
@@ -76,7 +100,7 @@
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_wuangus", "a37588688", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_benson0", "a28598183", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -114,21 +138,6 @@
             OCICommit($db_conn);
         }
 
-        /**
-         * 
-         */
-        function handlePOSTRequest() {
-            if (connectToDB()) {
-                if (array_key_exists('initializeTables', $_POST)) {
-                    handleInitializeAllTables();
-                } else if (array_key_exists('resetTablesRequest', $_POST)) {
-                    handleResetRequest();
-                }
-
-                disconnectFromDB();
-            }
-        }
-
         function handleResetRequest() {
             global $db_conn;
             // Drop old table
@@ -161,25 +170,93 @@
         function handleDisplayRequest() {
             global $db_conn;
 
+            displayPeopleHelper($db_conn);
+        }
+
+        function displayPeopleHelper($db_conn) {
             $result = executePlainSQL("SELECT * FROM Person");
 
-                echo "<br> <b> ID </b>" . str_repeat('&nbsp;', 6) . "<b> Name </b> <br>";
+                echo "<br> <b> PersonID </b>" . str_repeat('&nbsp;', 6) . "<b> Age </b>"
+                                              . str_repeat('&nbsp;', 6) . "<b> Name </b>"
+                                              . str_repeat('&nbsp;', 5) . "<b> Gender </b>"
+                                              . str_repeat('&nbsp;', 5) . "<b> Weight </b>"
+                                              . str_repeat('&nbsp;', 4) . "<b> Height </b> <br>";
 
             while (($row = oci_fetch_row($result)) != false) {
-                echo "<br>" . $row[0] . str_repeat('&nbsp;', 10) . $row[1] . "<br>";
+                echo "<br>" . $row[0] . str_repeat('&nbsp;', 10)
+                            . $row[1] . str_repeat('&nbsp;', 10)
+                            . $row[2] . str_repeat('&nbsp;', 10) 
+                            . $row[3] . str_repeat('&nbsp;', 11) 
+                            . $row[4] . str_repeat('&nbsp;', 13)
+                            . $row[5] . "<br>";
             }
         }
 
- // HANDLE ALL GET ROUTES
+
+
+        /**
+         * QUERY FUNCTIONS
+         */
+
+        function handleSelectionRequest() {
+            global $db_conn;
+
+            $attribute1 = $_GET['attribute1'];
+            $attribute2 = $_GET['attribute2'];
+
+            $result = executePlainSQL("SELECT $attribute1, $attribute2
+                                        FROM Person");
+            
+            echo "<br>Retrieved data from Person Table:<br>";
+            echo "<table>";
+            echo "<tr><th>$attribute1</th><th>$attribute2</th></tr>";
+            
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+            
+            echo "</table>";
+        }
+
+
+        function printResult($result) { //prints results from a select statement
+            echo "<br>DATA FROM TABLES:<br>";
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Name</th></tr>";
+
+            
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+            
+            echo "</table>";
+        }
+
+    // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
     function handleGETRequest() {
         if (connectToDB()) {
             if (array_key_exists('countTuples', $_GET)) {
                 handleCountRequest();
+            } else if (array_key_exists('displayTuples', $_GET)) {
+                handleDisplayRequest();
+            } else if (array_key_exists('selection', $_GET)) {
+                handleSelectionRequest();
             }
 
-            if (array_key_exists('displayTuples', $_GET)) {
-                handleDisplayRequest();
+            disconnectFromDB();
+        }
+    }
+
+    /**
+     * 
+     */
+    function handlePOSTRequest() {
+        if (connectToDB()) {
+            if (array_key_exists('initializeTables', $_POST)) {
+                handleInitializeAllTables();
+            } else if (array_key_exists('resetTablesRequest', $_POST)) {
+                handleResetRequest();
             }
 
             disconnectFromDB();
@@ -188,7 +265,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest'])) {
         handleGETRequest();
     }
     ?>
