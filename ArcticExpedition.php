@@ -81,6 +81,55 @@
             <input type="submit" name="selection2"></p>
         </form>
 
+        <h2>Project from Persons</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <label for="Name"> Identifying Features: </label>
+            <select name="attribute1" id="attribute1">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <select name="attribute2" id="attribute2">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <select name="attribute3" id="attribute3">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <select name="attribute4" id="attribute4">
+                <option value="noOption">noOption</option>
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <select name="attribute5" id="attribute5">
+                <option value="noOption">noOption</option>
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <input type="hidden" id="projectionRequest" name="projectionRequest">
+            <input type="submit" name="projection"></p>
+        </form>
+
     </body>
 
 
@@ -282,6 +331,65 @@
             echo "</table>";
         }
 
+        function handleProjectionRequest() {
+            global $db_conn;
+
+            $attribute1 = $_GET['attribute1'];
+            $attribute2 = $_GET['attribute2'];
+            $attribute3 = $_GET['attribute3'];
+            $attribute4 = $_GET['attribute4'];
+            $attribute5 = $_GET['attribute5'];
+
+            if ($attribute4 == 'noOption') $attribute4 = '';
+            if ($attribute5 == 'noOption') $attribute5 = '';
+
+            if ($attribute4 == '' && $attribute5 == '') {
+                $result = executePlainSQL("SELECT $attribute1, $attribute2, $attribute2
+                                        FROM Person");
+            } else if ($attribute4 == '') {
+                $result = executePlainSQL("SELECT $attribute1, $attribute2, $attribute2, $attribute5
+                                        FROM Person");
+            } else if ($attribute5 == ''){
+                $result = executePlainSQL("SELECT $attribute1, $attribute2, $attribute2, $attribute4
+                                        FROM Person");
+            } else {
+                $result = executePlainSQL("SELECT $attribute1, $attribute2, $attribute2, $attribute5, $attribute4
+                                        FROM Person");
+            }
+            
+            echo "<br>Retrieved data from Person Table:<br>";
+            echo "<table>";
+            echo "<tr><th>$attribute1</th>
+                    <th>$attribute2</th>
+                    <th>$attribute3</th>
+                    <th>$attribute4</th>
+                    <th>$attribute5</th></tr>";
+            
+            while ($row = OCI_Fetch_Array($result)) {
+                if ($attribute4 == '' && $attribute5 == '') {
+                    echo "<tr><td>" . $row[0] . 
+                    "</td><td>" . $row[1] . 
+                    "</td><td>" . $row[2] . 
+                    "</td></tr>";
+                } else if ($attribute4 == '' || $attribute5 == '') {
+                    echo "<tr><td>" . $row[0] . 
+                    "</td><td>" . $row[1] . 
+                    "</td><td>" . $row[2] . 
+                    "</td><td>" . $row[3] . 
+                    "</td></tr>";
+                } else {
+                    echo "<tr><td>" . $row[0] . 
+                    "</td><td>" . $row[1] . 
+                    "</td><td>" . $row[2] . 
+                    "</td><td>" . $row[3] . 
+                    "</td><td>" . $row[4] . 
+                    "</td></tr>";
+                } //or just use "echo $row[0]"
+            }
+            
+            echo "</table>";
+        }
+
 
         function printResult($result) { //prints results from a select statement
             echo "<br>DATA FROM TABLES:<br>";
@@ -306,6 +414,8 @@
                 handleDisplayRequest();
             } else if (array_key_exists('selection', $_GET)) {
                 handleSelectionRequest();
+            } else if (array_key_exists('projection', $_GET)) {
+                handleProjectionRequest();
             }
 
             disconnectFromDB();
@@ -325,14 +435,13 @@
                 handleSelectionRequest2();
             }
 
-
             disconnectFromDB();
         }
     }
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest'] || isset($_GET['projectRequest'])) {
         handleGETRequest();
     }
     ?>
