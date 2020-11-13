@@ -50,6 +50,37 @@
             <input type="submit" name="selection"></p>
         </form>
 
+        <h2>Select query from Persons</h2>
+        <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <label for="Name"> Find me the: </label>
+            <select name="attribute1" id="attribute1">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <label> of the people whose
+            <select name="attribute2" id="attribute2">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <label> is
+            <select name="condition" id="condition">
+                <option value="<">less than</option>
+                <option value="<=">less than or equal to</option>
+                <option value="=">equal to </option>
+                <option value=">">greater than </option>
+                <option value=">=">greater than or equal to</option>
+            </select>
+            <input type="text" name="insNo"> <br /><br />
+            <input type="hidden" id="selectionDropDown" name="selectionDropDown">
+            <input type="submit" name="selection2"></p>
+        </form>
+
     </body>
 
 
@@ -135,6 +166,18 @@
             VALUES(9119119, 25, 'John', 'male', 87, 188) 
             ");
 
+            executePlainSQL("INSERT INTO Person 
+            VALUES(1191191, 27, 'Sally', 'female', 72, 158) 
+            ");
+
+            executePlainSQL("INSERT INTO Person 
+            VALUES(1111119, 28, 'Adam', 'male', 80, 162) 
+            ");
+
+            executePlainSQL("INSERT INTO Person 
+            VALUES(1234231, 20, 'Benson', 'male', 80, 210) 
+            ");
+
             OCICommit($db_conn);
         }
 
@@ -218,6 +261,27 @@
             echo "</table>";
         }
 
+        function handleSelectionRequest2() {
+            global $db_conn;
+
+            $attribute1 = $_POST['attribute1'];
+            $attribute2 = $_POST['attribute2'];
+            $condition = $_POST['condition'];
+            $number = $_POST['insNo'];
+
+            $result = executePlainSQL("SELECT $attribute1 FROM Person WHERE $attribute2 $condition $number");
+            
+            echo "<br>Retrieved data from Person Table:<br>";
+            echo "<table>";
+            echo "<tr><th>$attribute1</th></tr>";
+            
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+            
+            echo "</table>";
+        }
+
 
         function printResult($result) { //prints results from a select statement
             echo "<br>DATA FROM TABLES:<br>";
@@ -257,13 +321,16 @@
                 handleInitializeAllTables();
             } else if (array_key_exists('resetTablesRequest', $_POST)) {
                 handleResetRequest();
+            } else if (array_key_exists('selection2', $_POST)) {
+                handleSelectionRequest2();
             }
+
 
             disconnectFromDB();
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest'])) {
         handleGETRequest();
