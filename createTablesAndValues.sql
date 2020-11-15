@@ -244,7 +244,7 @@ CREATE TABLE transportedBy (
 )
 
 
-CREATE TABLE  eats (
+CREATE TABLE eats (
     CargoID integer,
     PersonID integer,
     date date,
@@ -271,6 +271,12 @@ VALUES(8234812, 'carnivore', 'largest animal to ever exist', 'blue whale', 'Big 
 
 INSERT INTO Animal
 VALUES(3333333, 'carnivore', 'formerly known as herring whale or razorback whale', 'fin whale', 'Kermit', 1) 
+
+INSERT INTO Animal 
+VALUES(4343434, 'herbivore', 'zzz', 'arctic cod', 'Small Fry', 1)
+
+INSERT INTO Animal 
+VALUES(4123122, 'herbivore', 'zzz', 'snailfish', 'Marina', 1)
 
 -- Plants Table --
 
@@ -387,20 +393,20 @@ VALUES(9999999, 'biology')
 
 -- Crew table -- 
 
-INSERT INTO crew
+INSERT INTO crew 
 VALUES(1234567, 'Ship Captain')
 
-INSERT INTO crew
-VALUES(1212121, 'Janitor of Ship') 
+INSERT INTO crew 
+VALUES(1212121, 'Janitor of Ship')
 
-INSERT INTO crew
-VALUES(2323232, 'Engine Crew') 
+INSERT INTO crew 
+VALUES(2323232, 'Engine Crew')
 
-INSERT INTO crew
-VALUES(3434343, 'Engine Crew') 
+INSERT INTO crew 
+VALUES(3434343, 'Engine Crew')
 
-INSERT INTO crew
-VALUES(4545454, 'Exploration Vehicle Driver') 
+INSERT INTO crew 
+VALUES(4545454, 'Exploration Vehicle Driver')
 
 -- ScientificEquipment Table --
 
@@ -422,19 +428,19 @@ VALUES(9872, 48273, 'new', 1, 'erlenmeyer flask')
 -- PersonItem Table -- 
 
 INSERT INTO personalItem 
-VALUES(2, 89713, 'journal', 9999999)
+VALUES(2, 9119119, 89713, 'journal')
 
 INSERT INTO personalItem 
-VALUES(4, 23412, 'notebook', 1191191)
+VALUES(4, 1191191, 23412, 'notebook')
 
 INSERT INTO personalItem 
-VALUES(1, 37829, 'headphones', 9328712)
+VALUES(1, 1111119, 37829, 'headphones')
 
 INSERT INTO personalItem 
-VALUES(3, 49712, 'bag', 9871234)
+VALUES(3, 9999999, 49712, 'bag')
 
 INSERT INTO personalItem 
-VALUES(1, 39084, 'journal', 3427212)
+VALUES(1, 3729123, 39084, 'journal')
 
 -- Cargo Table -- 
 
@@ -453,22 +459,37 @@ VALUES(1111)
 INSERT INTO Cargo
 VALUES(9872)
 
+INSERT INTO Cargo
+VALUES(1234)
+
+INSERT INTO Cargo
+VALUES(3434)
+
+INSERT INTO Cargo
+VALUES(1521)
+
+INSERT INTO Cargo
+VALUES(2142)
+
+INSERT INTO Cargo
+VALUES(1612)
+
 -- Food Table -- 
 
 INSERT INTO food 
-VALUES(3419, 'Shin Ramyun Black', 01/10/2020, 01/06/2020, 280)
+VALUES(1234, 'Shin Ramyun Black', 01/10/2020, 01/06/2020, 280)
 
 INSERT INTO food 
-VALUES(1424, 'SPAM Classic', 20/02/2017, 06/01/2023, 174)
+VALUES(3434, 'SPAM Classic', 20/02/2017, 06/01/2023, 174)
 
 INSERT INTO food 
-VALUES(1963,'Premium Plus Salted Crackers', 17/01/2020, 06/10/2020, 90)
+VALUES(1521,'Premium Plus Salted Crackers', 17/01/2020, 06/10/2020, 90)
 
 INSERT INTO food 
-VALUES(1922, 'Heinz Beans', 22/03/2019, 10/10/2024, 155)
+VALUES(2142, 'Heinz Beans', 22/03/2019, 10/10/2024, 155)
 
 INSERT INTO food 
-VALUES(1600, 'Green Giant Whole Kernel Sweet Corn', 10/01/2020, 06/01/2021, 130)	
+VALUES(1612, 'Green Giant Whole Kernel Sweet Corn', 10/01/2020, 06/01/2021, 130)	
 
 -- Location Table -- 
 
@@ -527,39 +548,39 @@ VALUES(15, 3104, 1300)
 -- ArrivalDate table -- 
 
 INSERT INTO arrivalDate
-VALUES(2000-01-01, 'Cruise Ship Model-AB' ,2000-05-27)
+VALUES('01-JAN-2000', 'Cruise Ship Model-AB' ,'27-MAY-2000')
 
 INSERT INTO arrivalDate
-VALUES(2019-12-10, 'Research Ship Model-BC', 2019-12-17)
+VALUES('10-DEC-2019', 'Research Ship Model-BC', '17-DEC-2019')
 
 INSERT INTO arrivalDate
-VALUES(2017-08-14, 'Cruise Ship Model-AB', 2017-08-17)
+VALUES('14-AUG-2017', 'Cruise Ship Model-AB', '17-AUG-2017')
 
 INSERT INTO arrivalDate
-VALUES(2020-03-12, 'Ferry Model-FS', 2020-04-17)
+VALUES('12-MAR-2020', 'Ferry Model-FS', '17-APR-2020')
 
 INSERT INTO arrivalDate
-VALUES(2012-03-19, 'Bulk Carrier Model-HC', 2012-04-29)
+VALUES('19-MAR-2012', 'Bulk Carrier Model-HC', '29-APR-2012')
 
 INSERT INTO arrivalDate
-VALUES(1912-04-10, 'Luxury Steamship', 1912-04-15)
+VALUES('10-APR-1912', 'Luxury Steamship', '15-APR-1912')
 
 -- Ship Table -- 
 
 INSERT INTO ship
-VALUES('U6CH', 'RMS Titanic', 1912-04-10, 1679, 'Luxury Steamship', 46328,  4546)
+VALUES('U6CH', 'RMS Titanic', '10-APR-1912', 1679, 'Luxury Steamship', 46328,  4546)
 
 INSERT INTO ship
-VALUES('USMW', '50 Years of Victory', 2017-08-14, 4587, 'Cruise Ship Model-AB', 35319, 3829) 
+VALUES('USMW', '50 Years of Victory', '14-AUG-2017', 4587, 'Cruise Ship Model-AB', 35319, 3829) 
 
 INSERT INTO ship
-VALUES('PCSUM', 'Ultramarine', 2019-12-10, 4896, 'Research Ship Model-BC', 32180, 4128)
+VALUES('PCSUM', 'Ultramarine', '10-DEC-2019', 4896, 'Research Ship Model-BC', 32180, 4128)
 
 INSERT INTO ship
-VALUES('ISCS', 'Island Sky', 2012-03-19, 5129, 'Bulk Carrier Model-HC', 45928 , 5827)
+VALUES('ISCS', 'Island Sky', '12-MAR-2020', 5129, 'Bulk Carrier Model-HC', 45928 , 5827)
 
 INSERT INTO ship
-VALUES('USON', 'Ocean Nova', 2020-03-12, 3104, 'Ferry Model-FS', 26321, 5827)
+VALUES('USON', 'Ocean Nova', '19-MAR-2012', 3104, 'Ferry Model-FS', 26321, 5827)
 
 -- ExplorationVehicle Tables --
 
@@ -575,74 +596,94 @@ VALUES('landrover', 4)
 INSERT INTO explorationVehicle1
 VALUES('truck', 3) 
 
-INSERT INTO explorationVehicle2
-VALUES('jeep', 45, false) 
+INSERT INTO explorationVehicle1
+VALUES('Snow Cruiser', 20)
 
 INSERT INTO explorationVehicle2
-VALUES('snowmobile', 87, false) 
+VALUES('jeep', 45, 0) 
 
 INSERT INTO explorationVehicle2
-VALUES('snowmobile', 66, false) 
+VALUES('snowmobile', 87, 0) 
 
 INSERT INTO explorationVehicle2
-VALUES('landrover', 30, false) 
+VALUES('snowmobile', 66, 0) 
 
 INSERT INTO explorationVehicle2
-VALUES('truck', 20, true) 
+VALUES('landrover', 30, 0) 
+
+INSERT INTO explorationVehicle2
+VALUES('truck', 20, 1) 
 
 INSERT INTO explorationVehicle3
-VALUES('jeep', 45, 98127) 
+VALUES(98127, 'jeep', 45) 
 
 INSERT INTO explorationVehicle3
-VALUES('snowmobile', 87, 57481) 
+VALUES(57481, 'snowmobile', 87) 
 
 INSERT INTO explorationVehicle3
-VALUES('snowmobile', 66, 66273) 
+VALUES(66273, 'snowmobile', 66) 
 
 INSERT INTO explorationVehicle3
-VALUES('landrover', 30, 34578) 
+VALUES(34578, 'landrover', 30) 
 
 INSERT INTO explorationVehicle3
-VALUES('truck', 20, 89723) 
+VALUES(89723, 'truck', 20) 
 
 -- Uses Table -- 
 
-INSERT INTO uses
-VALUES(9119119, 8972, 82731, 'mix substances for a chemical compound')  
+INSERT INTO uses 
+VALUES(9119119, 8972, 82731, 'mix substances for a chemical compound') 
 
 INSERT INTO uses
 VALUES(1191191, 3487, 23487, 'heat up water')  
 
-INSERT INTO uses
-VALUES(3729123, 3232, 31203, 'inspect plants up close')  
+INSERT INTO uses 
+VALUES(1111119, 3232, 31203, 'inspect plants up close')
 
-INSERT INTO uses
-VALUES(2347192, 1111, 48523, 'whale watching')  
+INSERT INTO uses 
+VALUES(9999999, 1111, 48523, 'whale watching')
 
-INSERT INTO uses
-VALUES(9871234, 3232, 31203, 'look at insects up close')  
-
+INSERT INTO uses 
+VALUES(3729123, 9872, 48273, 'look at insects up close')  
 -- TravelsTo Table -- 
 
 INSERT INTO travelsTo
-VALUES(9119119, 83, 130, 2000-05-27)
+VALUES(9119119, 85, 132, '28-JUN-2000')
 
 INSERT INTO travelsTo
-VALUES(1191191, 83, 130, 2000-05-27)
+VALUES(1191191, 87, 122, '27-MAY-2000')
 
 INSERT INTO travelsTo
-VALUES(3729123, 83, 130, 2000-05-27)
+VALUES(9999999, 85, 130, '25-MAR-2000')
 
 INSERT INTO travelsTo
-VALUES(2347192, 83, 130, 2000-05-27)
+VALUES(9999999, 85, 130, '25-MAR-2000')
 
 INSERT INTO travelsTo
-VALUES(9871234, 83, 130, 2000-05-27)
+VALUES(3729123, 86, 128, '26-OCT-2000')
 
 -- Studies Table -- 
 
 INSERT INTO Studies 
-VALUES(9119119, 8910209,2323111)
+VALUES(9119119, 8910209, 2323111)
+
+INSERT INTO studies 
+VALUES(9119119, 2342123, 1111111)
+
+INSERT INTO studies 
+VALUES(9119119, 7028311, 3123411)
+
+INSERT INTO studies 
+VALUES(9119119, 8234812, 1020304)
+
+INSERT INTO studies 
+VALUES(9119119, 3333333, 1991203)
+
+INSERT INTO studies 
+VALUES(9999999, 3333333, 1991203)
+
+INSERT INTO studies 
+VALUES(1111119, 3333333, 1991203)
 
 INSERT INTO Studies 
 VALUES(1191191, 2342123,1111111)
@@ -655,6 +696,7 @@ VALUES(2347192, 8234812,1020304)
 
 INSERT INTO Studies 
 VALUES(9871234, 3333333,1991203)
+
 
 -- Consumes Table -- 
 
@@ -676,19 +718,19 @@ VALUES(3333333, 5873923)
 -- TakesOut Table --
 
 INSERT INTO takesOut
-VALUES(9999999, 98127, 'west of the abundance of shrubs', 2000-05-27)
+VALUES(9119119, 98127, 'west of the abundance of shrubs', '27-MAY-2000')
 
-INSERT INTO takesOut
-VALUES(9328712, 57481, 'east of the abundance of shrubs', 2012-04-09) 
+INSERT INTO takesOut 
+VALUES(1191191, 57481, 'east of the abundance of shrubs', '09-APR-2012')
 
-INSERT INTO takesOut
-VALUES(2348791, 66273, 'near the edge with the sea lions ', 2018-05-12) 
+INSERT INTO takesOut 
+VALUES(1111119, 66273, 'near the edge with the sea lions ', '12-MAY-2018')
 
-INSERT INTO takesOut
-VALUES(3321879, 34578, 'south of the abundance of shrubbery', 2016-04-17) 
+INSERT INTO takesOut 
+VALUES(9999999, 34578, 'south of the abundance of shrubbery', '17-APR-2016')
 
-INSERT INTO takesOut
-VALUES(3427212, 89723, 'near the west edge of the ice', 2017-03-27)  
+INSERT INTO takesOut 
+VALUES(3729123, 89723, 'near the west edge of the ice', '27-MAR-2017')
 
 -- TransportedBy Table --
 
@@ -709,17 +751,17 @@ VALUES('USON',3729123, 9872)
 
 -- Eats Table -- 
 
-INSERT INTO eats
-VALUES(3419, 9119119, 01/06/2021)
+INSERT INTO eats 
+VALUES(1234, 9119119, '01-JUN-2010')
 
-INSERT INTO eats
-VALUES(1424, 1191191, 06/01/2023)
+INSERT INTO eats 
+VALUES(3434, 1191191, '19-AUG-2019')
 
-INSERT INTO eats
-VALUES(1963, 1111119, 06/01/2021)
+INSERT INTO eats 
+VALUES(1521, 1111119, '27-JUL-2007')
 
-INSERT INTO eats
-VALUES(1963, 9999999, 10-01-2020)
+INSERT INTO eats 
+VALUES(2142, 9999999, '01-OCT-2001')
 
-INSERT INTO eats
-VALUES(3419, 3729123, 06/01/2022)
+INSERT INTO eats 
+VALUES(1612, 3729123, '01-JUN-2001')
