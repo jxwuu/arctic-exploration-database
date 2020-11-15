@@ -1,6 +1,11 @@
-<html>
+<!DOCTYPE html>
+    <html>
+        <head>  
+            <title>304 ARCTIC EXPEDITION </title> 
+        </head>
+
     <body>
-        <h1>304 Artic Expedition</h1>
+        <h1>304 Arctic Expedition</h1>
 
         <!--  type of button? -->
         <form method="POST" action="ArcticExpedition.php"> <!-- action reloads page to this project again-->
@@ -15,17 +20,33 @@
             <p><input type="submit" value="Reset" name="reset"></p>
         </form>
 
+        
         <form method="POST" action="ArcticExpeditionResearcher.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="gotoArcticExpeditionResearcher" name="gotoArcticExpeditionResearcher">
             <p><input type="submit" value="Researcher Tab" name="gotoArcticExpeditionResearcher"></p>
         </form>
 
+        <hr />
+        <h2>Insert Values into Person Table</h2>
+        <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
+            PersonID: <input type="text" name="insPID"> <br /><br />
+            Age: <input type="text" name="insAge"> <br /><br />
+            Name: <input type="text" name="insName"> <br /><br />
+            Gender: <input type="text" name="insGender"> <br /><br />
+            Weight: <input type="text" name="insWeight"> <br /><br />
+            Height: <input type="text" name="insHeight"> <br /><br />
+            <input type="submit" value="Insert" name="insertSubmit"></p>
+        </form>
+        <hr />
+
         <h2>Count the Tuples in Persons</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
+        <hr />
 
         <h2>Display the Tuples</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
@@ -62,6 +83,7 @@
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
+        <hr />
 
         <h2>Select from Persons</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
@@ -85,6 +107,7 @@
             <input type="hidden" id="selectionRequest" name="selectionRequest">
             <input type="submit" name="selection"></p>
         </form>
+        <hr />
 
         <h2>Select query from Persons</h2>
         <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
@@ -137,6 +160,7 @@
             <input type="hidden" id="selectionDropDown" name="selectionDropDown">
             <input type="submit" name="selection2"></p>
         </form>
+        <hr />
 
         <h2>Project from Persons</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
@@ -186,6 +210,7 @@
             <input type="hidden" id="projectionRequest" name="projectionRequest">
             <input type="submit" name="projection"></p>
         </form>
+        <hr />
 
     </body>
 
@@ -232,12 +257,49 @@
             }
 
 			return $statement;
-		}
+        }
+        
+               
+        function executeBoundSQL($cmdstr, $list) {
+            /* Sometimes the same statement will be executed several times with different values for the variables involved in the query.
+		In this case you don't need to create the statement several times. Bound variables cause a statement to only be
+		parsed once and you can reuse the statement. This is also very useful in protecting against SQL injection. 
+		See the sample code below for how this function is used */
+
+			global $db_conn, $success;
+			$statement = OCIParse($db_conn, $cmdstr);
+
+            if (!$statement) {
+                echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+                $e = OCI_Error($db_conn);
+                echo htmlentities($e['message']);
+                $success = False;
+            }
+
+            foreach ($list as $tuple) {
+                foreach ($tuple as $bind => $val) {
+                    //echo $val;
+                    //echo "<br>".$bind."<br>";
+                    OCIBindByName($statement, $bind, $val);
+                    unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
+				}
+
+                $r = OCIExecute($statement, OCI_DEFAULT);
+                if (!$r) {
+                    echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                    $e = OCI_Error($statement); // For OCIExecute errors, pass the statementhandle
+                    echo htmlentities($e['message']);
+                    echo "<br>";
+                    $success = False;
+                }
+            }
+        }
+
 
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_wuangus", "a37588688", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_jxwu", "a89879514", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -699,6 +761,27 @@
             OCICommit($db_conn);
         }
 
+        function handleInsertRequest() {
+            global $db_conn;
+
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['insPID'],
+                ":bind2" => $_POST['insAge'],
+                ":bind3" => $_POST['insName'],
+                ":bind4" => $_POST['insGender'],
+                ":bind5" => $_POST['insWeight'],
+                ":bind6" => $_POST['insHeight']
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+            executeBoundSQL("INSERT INTO Person VALUES (:bind1, :bind2, :bind3, :bind4, :bind5, :bind6)", $alltuples);
+            OCICommit($db_conn);
+        }
+
+
         function handleCountRequest() {
             global $db_conn;
 
@@ -906,6 +989,8 @@
                 handleResetRequest();
             } else if (array_key_exists('selection2', $_POST)) {
                 handleSelectionRequest2();
+            } else if (array_key_exists('insertQueryRequest', $_POST)) {
+                handleInsertRequest();
             }
 
             disconnectFromDB();
