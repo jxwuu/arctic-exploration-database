@@ -13,7 +13,7 @@
 
         <hr />
 
-        <h2>Display the Tuples in DemoTable</h2>
+        <h2>Display the Tuples in Person Table</h2>
         <form method="GET" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
