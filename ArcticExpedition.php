@@ -15,6 +15,12 @@
             <p><input type="submit" value="Reset" name="reset"></p>
         </form>
 
+        <form method="POST" action="ArcticExpeditionResearcher.php">
+            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
+            <input type="hidden" id="gotoArcticExpeditionResearcher" name="gotoArcticExpeditionResearcher">
+            <p><input type="submit" value="Researcher Tab" name="gotoArcticExpeditionResearcher"></p>
+        </form>
+
         <h2>Count the Tuples in DemoTable</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
