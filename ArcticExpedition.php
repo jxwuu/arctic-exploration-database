@@ -226,16 +226,47 @@
             executePlainSQL("INSERT INTO Person 
             VALUES(1234231, 20, 'Benson', 'male', 80, 210) 
             ");
-
             OCICommit($db_conn);
         }
 
         function handleResetRequest() {
             global $db_conn;
             // Drop old table
-            executePlainSQL("DROP TABLE Person");
+            // executePlainSQL("DROP TABLE Researcher");
+            // executePlainSQL("DROP TABLE Crew");
+            // executePlainSQL("DROP TABLE PersonalItem");
+            // executePlainSQL("DROP TABLE Plants");
+            // executePlainSQL("DROP TABLE Animal");
+            // executePlainSQL("DROP TABLE Food");
+            // executePlainSQL("DROP TABLE ScientificEquipment");
+            // executePlainSQL("DROP TABLE weather1");
+            // executePlainSQL("DROP TABLE weather2");
+            // executePlainSQL("DROP TABLE weather3");
+            // executePlainSQL("DROP TABLE location");
+            // executePlainSQL("DROP TABLE maxDist");
+            // executePlainSQL("DROP TABLE arrivalDate");
+            // executePlainSQL("DROP TABLE shipModel");
+            // executePlainSQL("DROP TABLE ship");
+            // executePlainSQL("DROP TABLE explorationVehicle1");
+            // executePlainSQL("DROP TABLE explorationVehicle2");
+            // executePlainSQL("DROP TABLE explorationVehicle3");
+            // executePlainSQL("DROP TABLE uses");
+            // executePlainSQL("DROP TABLE travelsTo");
+            // executePlainSQL("DROP TABLE takesOut");
+            // executePlainSQL("DROP TABLE Studies");
+            // executePlainSQL("DROP TABLE consumes");
+            // executePlainSQL("DROP TABLE transportedBy");
+            // executePlainSQL("DROP TABLE eats");
 
-            // Create new table
+            /**
+             * all tables referenced as foreign keys must be dropped last
+             */ 
+            // executePlainSQL("DROP TABLE Person");
+            // executePlainSQL("DROP TABLE Cargo");
+
+            /**
+             * ALL THE TABLES W/O DEPENDENCIES
+             */
             echo "<br> creating new table <br>";
             executePlainSQL("CREATE TABLE Person (
                 PersonID integer, 
@@ -246,6 +277,237 @@
                 Height integer, 
                 PRIMARY KEY (PersonID)
             )");
+            executePlainSQL("CREATE TABLE Plants (
+                PlantID integer,
+                Species char(50),
+                Colour char(50),
+                Age integer,
+                Height integer,
+                Description char(50),
+                PRIMARY KEY (PlantID)
+            )");
+            executePlainSQL("CREATE TABLE Animal(
+                AnimalID integer, 
+                Diet char(50), 
+                Description char(100), 
+                Species char(50), 
+                Name char(50) UNIQUE, 
+                Vertebrate char(1), 
+                PRIMARY KEY(AnimalID)
+            )");
+            executePlainSQL("CREATE TABLE Cargo (
+                CargoID integer,
+                PRIMARY KEY (CargoID)
+            )");
+            executePlainSQL("CREATE TABLE location(
+                Longitude integer, 
+                Latitude integer,
+                Climate char(50), 
+                PRIMARY KEY(longitude, latitude) 
+            )");
+            executePlainSQL("CREATE TABLE weather1(
+                Temperature integer, 
+                rain decimal(3, 2),			
+                Humidity decimal(3, 2),
+                PRIMARY KEY (Temperature, rain)
+            )");
+            executePlainSQL("CREATE TABLE weather2 (
+                Cloud decimal(3, 2),
+                rain decimal(3, 2), 
+                PRIMARY KEY (Cloud)
+            )");
+            executePlainSQL("CREATE TABLE maxDist (
+                TopSpeed integer,
+                CurrentFuel integer,
+                MaximumDistance integer,
+                PRIMARY KEY(TopSpeed, CurrentFuel)
+            )");
+            executePlainSQL("CREATE TABLE arrivalDate(
+                DepartureDate date,
+                ShipModel char(50),
+                arrivalDate date,
+                PRIMARY KEY(DepartureDate, ShipModel)
+            )");
+            executePlainSQL("CREATE TABLE shipModel (
+                shipModel char(50),
+                Capacity integer,
+                topSpeed integer,
+                PRIMARY KEY (shipModel)
+            )");
+            executePlainSQL("CREATE TABLE ship (
+                SignalFlagID char(50),
+                Name char(50),
+                DepartureDate date,
+                CurrentFuel integer,
+                shipModel char(50),
+                weightOnBoard integer,
+                distanceTravelled integer,
+                PRIMARY KEY(SignalFlagID)
+            )");
+            executePlainSQL("CREATE TABLE explorationVehicle1 (
+                VehicleType char(50),
+                Seats integer,
+                PRIMARY KEY (VehicleType)
+            )");
+            executePlainSQL("CREATE TABLE explorationVehicle2 (
+                VehicleType char(50),
+                DistanceTraveled integer,
+                RequireMaintenance char(1),
+                PRIMARY KEY (VehicleType, DistanceTraveled)
+            )");
+            executePlainSQL("CREATE TABLE explorationVehicle3 (
+                VehicleID integer,
+                VehicleType char(50),
+                DistanceTraveled integer,
+                PRIMARY KEY (VehicleID)
+            )"); 
+
+
+
+            /**
+             * TABLES W/ DEPENDENCIES
+             */
+            executePlainSQL("CREATE TABLE Researcher(
+                PersonID integer,
+                AreaOfStudy char(50) NOT NULL,
+                PRIMARY KEY (PersonID),
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE
+            )
+            ");
+            executePlainSQL("CREATE TABLE Crew(
+                PersonID integer,
+                Job char(50) NOT NULL,
+                PRIMARY KEY (PersonID),
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE PersonalItem (
+                Weight integer,
+                PersonID integer,
+                PersonalItemID integer,
+                Description char(50),
+                PRIMARY KEY (PersonalItemID, PersonID),
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE Food (
+                CargoID integer,
+                FoodType char(50),
+                PreparationDate date,	
+                ExpirationDate date,
+                Calories integer,
+                PRIMARY KEY (CargoID),
+                FOREIGN KEY (CargoID) REFERENCES Cargo
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE ScientificEquipment (
+                CargoID integer,
+                ScientificEquipmentID integer,
+                Description char(50),
+                Fragile char(1), 
+                Name char(50), 
+                PRIMARY KEY(CargoID, ScientificEquipmentID),
+                FOREIGN KEY(CargoID) REFERENCES Cargo
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE weather3 (
+                Temperature integer,
+                WindSpeed integer,
+                WeatherDate date,
+                Cloud decimal(3, 2),
+                Latitude integer,
+                Longitude integer,
+                PRIMARY KEY (WeatherDate, Latitude, Longitude),
+                FOREIGN KEY (Latitude, Longitude) REFERENCES Location
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE uses(
+                PersonID integer,
+                CargoID integer,
+                ScientificEquipmentID integer,
+                Purpose char(50),
+                PRIMARY KEY (PersonID, CargoID, ScientificEquipmentID),
+                FOREIGN KEY (PersonID) REFERENCES researcher
+                    ON DELETE CASCADE,
+                FOREIGN KEY (CargoID, ScientificEquipmentID) REFERENCES ScientificEquipment
+                    ON DELETE CASCADE
+            )"); 
+            executePlainSQL("CREATE TABLE travelsTo(
+                PersonID integer,
+                Longitude integer,
+                Latitude integer,
+                TravelsToDate date,
+                PRIMARY KEY(PersonID, Longitude, Latitude),
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE,
+                FOREIGN KEY (Longitude, Latitude) REFERENCES Location
+                    ON DELETE CASCADE
+            )"); 
+            executePlainSQL("CREATE TABLE takesOut(
+                PersonID integer,
+                VehicleID integer,
+                Destination char(50), 
+                TakesOutDate date,
+                PRIMARY KEY (PersonID, VehicleID, Destination, TakesOutDate),	
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE,
+                FOREIGN KEY (VehicleID) REFERENCES explorationVehicle3
+                    ON DELETE CASCADE
+            )"); 
+            executePlainSQL("CREATE TABLE Studies(
+                PersonID integer,
+                AnimalID integer,
+                PlantID integer,
+                PRIMARY KEY (PersonID, AnimalID, PlantID),
+                FOREIGN KEY (PersonID) references researcher
+                    ON DELETE CASCADE,
+                FOREIGN KEY (AnimalID) references Animal
+                    ON DELETE CASCADE,
+                FOREIGN KEY (PlantID) references Plants
+                    ON DELETE CASCADE	
+            )"); 
+            executePlainSQL("CREATE TABLE consumes(
+                AnimalID1 integer,
+                AnimalID2 integer,
+                PRIMARY KEY (AnimalID1, AnimalID2),
+                FOREIGN KEY (AnimalID1) REFERENCES Animal
+                    ON DELETE CASCADE,
+                FOREIGN KEY (AnimalID2) REFERENCES Animal
+                    ON DELETE CASCADE
+            )"); 
+            executePlainSQL("CREATE TABLE transportedBy (
+                SignalFlagID char(50),
+                PersonID integer,
+                CargoID integer,
+                PRIMARY KEY (PersonID, CargoID),
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE,
+                FOREIGN KEY (SignalFlagID) REFERENCES Ship
+                    ON DELETE CASCADE,
+                FOREIGN KEY (CargoID) REFERENCES Cargo
+                    ON DELETE CASCADE
+            )");
+            executePlainSQL("CREATE TABLE consumes(
+                AnimalID1 integer,
+                AnimalID2 integer,
+                PRIMARY KEY (AnimalID1, AnimalID2),
+                FOREIGN KEY (AnimalID1) REFERENCES Animal
+                    ON DELETE CASCADE,
+                FOREIGN KEY (AnimalID2) REFERENCES Animal
+                    ON DELETE CASCADE
+            )");      
+            executePlainSQL("CREATE TABLE  eats (
+                CargoID integer,
+                PersonID integer,
+                Eatsdate date,
+                PRIMARY KEY (CargoID, PersonID),
+                FOREIGN KEY (CargoID) REFERENCES Cargo
+                    ON DELETE CASCADE,
+                FOREIGN KEY (PersonID) REFERENCES Person
+                    ON DELETE CASCADE
+            )"); 
+
             OCICommit($db_conn);
         }
 
@@ -441,7 +703,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest'] || isset($_GET['projectRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest'])) {
         handleGETRequest();
     }
     ?>
