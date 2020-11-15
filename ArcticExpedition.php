@@ -279,6 +279,11 @@
             executePlainSQL("INSERT INTO Plants VALUES(3123411, 'Deschampsia antarctica', 'green', 1, 1,'still relatively short antarctic hair grass')");
             executePlainSQL("INSERT INTO Plants VALUES(1020304, 'Colobanthus quitensis', 'green', 1, 2, 'antarctic pearlwort, no flowers yet')");
             executePlainSQL("INSERT INTO Plants VALUES(1991203, 'Colobanthus quitensis', 'yellow and green', 10, 12, 'antarctic pearlwort, has abundant amount of flowers')");
+            executePlainSQL("INSERT INTO location VALUES(85, 132, 'desert')");
+            executePlainSQL("INSERT INTO location VALUES(87, 122, 'desert')");
+            executePlainSQL("INSERT INTO location VALUES(89, 127, 'desert')");
+            executePlainSQL("INSERT INTO location VALUES(85, 130, 'desert')");
+            executePlainSQL("INSERT INTO location VALUES(86, 128, 'desert')");
             executePlainSQL("INSERT INTO weather1 VALUES(-25, 0.55, 0.04)");
             executePlainSQL("INSERT INTO weather1 VALUES(-35, 0.43, 0.88)");
             executePlainSQL("INSERT INTO weather1 VALUES(-42, 0.23, 0.92)");
@@ -289,36 +294,36 @@
             executePlainSQL("INSERT INTO weather2 VALUES(0.23, 0.11)");
             executePlainSQL("INSERT INTO weather2 VALUES(0.33, 0.22)");
             executePlainSQL("INSERT INTO weather2 VALUES(0.03, 0.33)");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
-            executePlainSQL("");
+            executePlainSQL("INSERT INTO weather3 VALUES(-25, 28, '16-OCT-2020', 0.24, 85, 132)");
+            executePlainSQL("INSERT INTO weather3 VALUES(-35, 50, '17-OCT-2020', 0.55, 87, 122)");
+            executePlainSQL("INSERT INTO weather3 VALUES(-42, 43, '18-OCT-2020', 0.56, 89, 127)");
+            executePlainSQL("INSERT INTO weather3 VALUES(-44, 55, '19-OCT-2020', 0.88, 85, 130)");
+            executePlainSQL("INSERT INTO weather3 VALUES(-26, 22, '20-OCT-2020', 0.82, 86, 128)");
+            executePlainSQL("INSERT INTO Person VALUES(9119119, 28, 'John', 'male', 87, 188)");
+            executePlainSQL("INSERT INTO Person VALUES(1191191, 25, 'Sally', 'female', 72, 158)");
+            executePlainSQL("INSERT INTO Person VALUES(1111119, 36, 'Adam', 'male', 80, 162)");
+            executePlainSQL("INSERT INTO Person VALUES(9999999, 38, 'Betty', 'female', 73, 174)");
+            executePlainSQL("INSERT INTO Person VALUES(3729123, 42, 'Alex', 'nonbinary', 56, 142)");
+            executePlainSQL("INSERT INTO researcher VALUES(9119119, 'biology') ");
+            executePlainSQL("INSERT INTO researcher VALUES(1191191, 'chemistry')");
+            executePlainSQL("INSERT INTO researcher VALUES(3729123, 'biology')");
+            executePlainSQL("INSERT INTO researcher VALUES(1111119, 'botany')");
+            executePlainSQL("INSERT INTO researcher VALUES(9999999, 'biology')");
+            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO Cargo VALUES(8972)");
+            executePlainSQL("INSERT INTO Cargo VALUES(3487)");
+            executePlainSQL("INSERT INTO Cargo VALUES(3232)");
+            executePlainSQL("INSERT INTO Cargo VALUES(1111)");
+            executePlainSQL("INSERT INTO Cargo VALUES(9872)");
+            executePlainSQL("INSERT INTO scientificEquipment VALUES(8972, 82731, 'couple of scratches', 1, 'erlenmeyer flask')"); 
+            executePlainSQL("INSERT INTO scientificEquipment VALUES(3487, 23487, 'chipped', 0, 'bunsen burner')");
+            executePlainSQL("INSERT INTO scientificEquipment VALUES(3232, 31203, 'new', 0, 'magnifying glass')");
+            executePlainSQL("INSERT INTO scientificEquipment VALUES(1111, 48523, 'scratch on left hand side glass', 0, 'binoculars')");
+            executePlainSQL("INSERT INTO scientificEquipment VALUES(9872, 48273, 'new', 1, 'erlenmeyer flask')");
             executePlainSQL("");
 
 

@@ -73,7 +73,7 @@ CREATE TABLE ScientificEquipment (
 	CargoID integer,
 	ScientificEquipmentID integer,
 	Description char(50),
-	Fragile bool, 
+	Fragile integer, 
 	Name char(50), 
 	PRIMARY KEY(CargoID, equipmentID),
 	FOREIGN KEY(CargoID) REFERENCES Cargo
@@ -322,36 +322,36 @@ INSERT INTO weather2
 VALUES(0.03, 0.33)
 
 INSERT INTO weather3
-VALUES(-25, 28,16/10/2020, 0.24, 85, 132) 
+VALUES(-25, 28, '16-OCT-2020', 0.24, 85, 132)
 
 INSERT INTO weather3
-VALUES(-35, 50, 17/10/2020,0.55, 87, 122) 
+VALUES(-35, 50, '17-OCT-2020', 0.55, 87, 122)
 
 INSERT INTO weather3
-VALUES(-42, 43, 18/10/2020,0.56, 89, 127) 
+VALUES(-42, 43, '18-OCT-2020', 0.56, 89, 127)
 
 INSERT INTO weather3
-VALUES(-44, 55, 19/10/2020,0.88, 85, 130) 
+VALUES(-44, 55, '19-OCT-2020', 0.88, 85, 130)
 
 INSERT INTO weather3
-VALUES(-26, 22, 20/10/2020,0.82, 86, 128)
+VALUES(-26, 22, '20-OCT-2020', 0.82, 86, 128)
 
 -- Person table --
 
 INSERT INTO Person 
-VALUES(9119119, 'John', 'male', 87, 188, 'biology', 'biologist') 
+VALUES(9119119, 28, 'John', 'male', 87, 188)
 
 INSERT INTO Person 
-VALUES(1191191, 'Sally', 'female', 72, 158, 'chemistry', 'chemist') 
+VALUES(1191191, 25, 'Sally', 'female', 72, 158)
 
 INSERT INTO Person 
-VALUES(1111119, 'Adam', 'male', 80, 162,'paleontology', 'paleontologist' ) 
+VALUES(1111119, 36, 'Adam', 'male', 80, 162)
 
 INSERT INTO Person 
-VALUES(9999999, 'Betty', 'female', 73, 174,'psychology','driver') 
+VALUES(9999999, 38, 'Betty', 'female', 73, 174)
 
 INSERT INTO Person 
-VALUES(3729123, 'Alex', 'nonbinary', 56, 142,'biology', 'biologist') 
+VALUES(3729123, 42, 'Alex', 'nonbinary', 56, 142)
 
 -- Researcher Table --
 
@@ -365,10 +365,10 @@ INSERT INTO researcher
 VALUES(3729123, 'biology')
 
 INSERT INTO researcher 
-VALUES(2347192, 'botany')
+VALUES(1111119, 'botany')
 
 INSERT INTO researcher 
-VALUES(9871234, 'biology')
+VALUES(9999999, 'biology')
 
 -- Crew table -- 
 
@@ -390,19 +390,19 @@ VALUES(3427212, 8971234)
 -- ScientificEquipment Table --
 
 INSERT INTO scientificEquipment
-VALUES(8972, 82731, 'couple of scratches', true, 'erlenmeyer flask') 
+VALUES(8972, 82731, 'couple of scratches', 1, 'erlenmeyer flask') 
 
 INSERT INTO scientificEquipment
-VALUES(3487, 23487, 'chipped', false, 'bunsen burner') 
+VALUES(3487, 23487, 'chipped', 0, 'bunsen burner') 
 
 INSERT INTO scientificEquipment
-VALUES(3232, 31203, 'new', false, 'magnifying glass') 
+VALUES(3232, 31203, 'new', 0, 'magnifying glass') 
 
 INSERT INTO scientificEquipment
-VALUES(1111, 48523, 'scratch on left hand side glass', false, 'binoculars') 
+VALUES(1111, 48523, 'scratch on left hand side glass', 0, 'binoculars') 
 
 INSERT INTO scientificEquipment
-VALUES(9872, 48273, 'new', true, 'erlenmeyer flask') 
+VALUES(9872, 48273, 'new', 1, 'erlenmeyer flask') 
 
 -- PersonItem Table -- 
 
@@ -458,19 +458,19 @@ VALUES(1600, 'Green Giant Whole Kernel Sweet Corn', 10/01/2020, 06/01/2021, 130)
 -- Location Table -- 
 
 INSERT INTO location
-VALUES(82, 135, desert) 
+VALUES(85, 132, 'desert')
 
 INSERT INTO location
-VALUES(90, 125, desert) 
+VALUES(87, 122, 'desert')
 
 INSERT INTO location
-VALUES(83, 135, desert)
+VALUES(89, 127, 'desert')
 
 INSERT INTO location
-VALUES(88, 121, desert)
+VALUES(85, 130, 'desert')
 
 INSERT INTO location
-VALUES(89, 121, desert) 
+VALUES(86, 128, 'desert')
 
 -- shipModel Table -- 
 
