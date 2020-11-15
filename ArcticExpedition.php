@@ -237,7 +237,7 @@
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_wuangus", "a37588688", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_jxwu", "a89879514", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -324,8 +324,87 @@
             executePlainSQL("INSERT INTO scientificEquipment VALUES(3232, 31203, 'new', 0, 'magnifying glass')");
             executePlainSQL("INSERT INTO scientificEquipment VALUES(1111, 48523, 'scratch on left hand side glass', 0, 'binoculars')");
             executePlainSQL("INSERT INTO scientificEquipment VALUES(9872, 48273, 'new', 1, 'erlenmeyer flask')");
-            executePlainSQL("");
-
+            executePlainSQL("INSERT INTO personalItem VALUES(2, 89713, 'journal', 9999999)");
+            executePlainSQL("INSERT INTO personalItem VALUES(4, 23412, 'notebook', 1191191)");
+            executePlainSQL("INSERT INTO personalItem VALUES(1, 37829, 'headphones', 9328712)");
+            executePlainSQL("INSERT INTO personalItem VALUES(3, 49712, 'bag', 9871234)");
+            executePlainSQL("INSERT INTO personalItem VALUES(1, 39084, 'journal', 3427212)");
+            executePlainSQL("INSERT INTO food VALUES(3419, 'Shin Ramyun Black', '01-JAN-2020','06-OCT-2020' , 280)");
+            executePlainSQL("INSERT INTO food VALUES(1424, 'SPAM Classic', '20-NOV-2017', '28-SEP-2023', 174)");
+            executePlainSQL("INSERT INTO food VALUES(1963,'Premium Plus Salted Crackers', '17-JAN-2020', '29-JAN-2020', 90)");
+            executePlainSQL("INSERT INTO food VALUES(1922, 'Heinz Beans', '22-MAR-2019', '10-OCT-2024', 155)");
+            executePlainSQL("INSERT INTO food VALUES(1600, 'Green Giant Whole Kernel Sweet Corn', '10-JAN-2020', '01-JUN-2021', 130)");    
+            executePlainSQL("INSERT INTO shipModel VALUES('Cruise Ship Model-AB', 1114, 12)");
+            executePlainSQL("INSERT INTO shipModel VALUES('Research Ship Model-BC', 134, 20)");
+            executePlainSQL("INSERT INTO shipModel VALUES('Bulk Carrier Model-HC', 130, 21)");
+            executePlainSQL("INSERT INTO shipModel VALUES('Ferry Model-FS', 1121, 12)");
+            executePlainSQL("INSERT INTO shipModel VALUES('Cruise Ship Model-BT', 2150, 15)");
+            executePlainSQL("INSERT INTO shipModel VALUES('Luxury Steamship', 2435, 23)");
+            executePlainSQL("INSERT INTO maxDist VALUES(23, 1679, 1800)");
+            executePlainSQL("INSERT INTO maxDist VALUES( 12, 4587, 1765)");
+            executePlainSQL("INSERT INTO maxDist VALUES(20, 4896, 1657)");
+            executePlainSQL("INSERT INTO maxDist VALUES( 21, 5129, 1345)");
+            executePlainSQL("INSERT INTO maxDist VALUES(15, 3104, 1300)");
+            executePlainSQL("INSERT INTO arrivalDate VALUES('2000-JAN-01', 'Cruise Ship Model-AB' ,'2000-MAY-27')");
+            executePlainSQL("INSERT INTO arrivalDate VALUES('2019-DEC-10', 'Research Ship Model-BC', '2019-DEC-17')"); 
+            executePlainSQL("INSERT INTO arrivalDate VALUES('2017-AUG-14', 'Cruise Ship Model-AB', '2017-AUG-17')");
+            executePlainSQL("INSERT INTO arrivalDate VALUES('2020-MAR-12', 'Ferry Model-FS', '2020-APR-17')");
+            executePlainSQL("INSERT INTO arrivalDate VALUES('2012-MAR-19', 'Bulk Carrier Model-HC', '2012-APR-29')");
+            executePlainSQL("INSERT INTO arrivalDate VALUES('1912-APR-10', 'Luxury Steamship', '1912-APR-15')");
+            executePlainSQL("INSERT INTO ship VALUES('U6CH', 'RMS Titanic', '1912-APR-10', 1679, 'Luxury Steamship', 46328,  4546)");
+            executePlainSQL("INSERT INTO ship VALUES('USMW', '50 Years of Victory','2017-AUG-14', 4587, 'Cruise Ship Model-AB', 35319, 3829)"); 
+            executePlainSQL("INSERT INTO ship VALUES('PCSUM', 'Ultramarine', '2019-DEC-10', 4896, 'Research Ship Model-BC', 32180, 4128)");
+            executePlainSQL("INSERT INTO ship VALUES('ISCS', 'Island Sky', '2012-MAR-19', 5129, 'Bulk Carrier Model-HC', 45928 , 5827)");
+            executePlainSQL("INSERT INTO ship VALUES('USON', 'Ocean Nova', '2020-MAR-12', 3104, 'Ferry Model-FS', 26321, 5827)");
+            executePlainSQL("INSERT INTO explorationVehicle1 VALUES('jeep', 5)"); 
+            executePlainSQL("INSERT INTO explorationVehicle1 VALUES('snowmobile', 3)"); 
+            executePlainSQL("INSERT INTO explorationVehicle1 VALUES('landrover', 4)"); 
+            executePlainSQL("INSERT INTO explorationVehicle1 VALUES('truck', 3)"); 
+            executePlainSQL("INSERT INTO explorationVehicle2 VALUES('jeep', 45, '0')"); 
+            executePlainSQL("INSERT INTO explorationVehicle2 VALUES('snowmobile', 87, '0')"); 
+            executePlainSQL("INSERT INTO explorationVehicle2 VALUES('snowmobile', 66, '0')");  
+            executePlainSQL("INSERT INTO explorationVehicle2 VALUES('landrover', 30, '0')"); 
+            executePlainSQL("INSERT INTO explorationVehicle2 VALUES('truck', 20, '1')"); 
+            executePlainSQL("INSERT INTO explorationVehicle3 VALUES('jeep', 45, 98127)"); 
+            executePlainSQL("INSERT INTO explorationVehicle3 VALUES('snowmobile', 87, 57481)"); 
+            executePlainSQL("INSERT INTO explorationVehicle3 VALUES('snowmobile', 66, 66273)"); 
+            executePlainSQL("INSERT INTO explorationVehicle3 VALUES('landrover', 30, 34578)"); 
+            executePlainSQL("INSERT INTO explorationVehicle3 VALUES('truck', 20, 89723)");  
+            executePlainSQL("INSERT INTO uses VALUES(9119119, 8972, 82731, 'mix substances for a chemical compound')");  
+            executePlainSQL("INSERT INTO uses VALUES(1191191, 3487, 23487, 'heat up water')");  
+            executePlainSQL("INSERT INTO uses VALUES(3729123, 3232, 31203, 'inspect plants up close')");  
+            executePlainSQL("INSERT INTO uses VALUES(2347192, 1111, 48523, 'whale watching')");  
+            executePlainSQL("INSERT INTO uses VALUES(9871234, 3232, 31203, 'look at insects up close')");  
+            executePlainSQL("INSERT INTO travelsTo VALUES(9119119, 83, 130, '2000-MAY-27')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(1191191, 83, 130, '2000-MAY-27')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(3729123, 83, 130, '2000-MAY-27')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(2347192, 83, 130, '2000-MAY-27')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(9871234, 83, 130, '2000-MAY-27')");
+            executePlainSQL("INSERT INTO Studies VALUES(9119119, 8910209,2323111)");
+            executePlainSQL("INSERT INTO Studies VALUES(1191191, 2342123,1111111)");
+            executePlainSQL("INSERT INTO Studies VALUES(3729123, 7028311,3123411)");
+            executePlainSQL("INSERT INTO Studies VALUES(2347192, 8234812,1020304)");
+            executePlainSQL("INSERT INTO Studies VALUES(9871234, 3333333,1991203)");
+            executePlainSQL("INSERT INTO consumes VALUES(8910209, 3847212)");
+            executePlainSQL("INSERT INTO consumes VALUES(2342123, 4239847)");
+            executePlainSQL("INSERT INTO consumes VALUES(7028311, 5746384)");
+            executePlainSQL("INSERT INTO consumes VALUES(8234812, 5938412)");
+            executePlainSQL("INSERT INTO consumes VALUES(3333333, 5873923)");
+            executePlainSQL("INSERT INTO takesOut VALUES(9999999, 98127, 'west of the abundance of shrubs', '2000-MAY-27')");
+            executePlainSQL("INSERT INTO takesOut VALUES(9328712, 57481, 'east of the abundance of shrubs', '2012-APR-09')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(2348791, 66273, 'near the edge with the sea lions ', '2018-MAY-12')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(3321879, 34578, 'south of the abundance of shrubbery', '2016-APR-17')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(3427212, 89723, 'near the west edge of the ice', '2017-MAR-27')");  
+            executePlainSQL("INSERT INTO transportedBy VALUES('U6CH', 9119119, 8972)");
+            executePlainSQL("INSERT INTO transportedBy VALUES('USMW', 1191191, 3487)");
+            executePlainSQL("INSERT INTO transportedBy VALUES('PCSUM', 1111119, 3232)");
+            executePlainSQL("INSERT INTO transportedBy VALUES('ISCS', 9999999, 1111)");
+            executePlainSQL("INSERT INTO transportedBy VALUES('USON',3729123, 9872)"); 
+            executePlainSQL("INSERT INTO eats VALUES(3419, 9119119, '2021-JUN-01')");
+            executePlainSQL("INSERT INTO eats VALUES(1424, 1191191, '2023-AUG-19')");
+            executePlainSQL("INSERT INTO eats VALUES(1963, 1111119, '2021-JUL-27')");
+            executePlainSQL("INSERT INTO eats VALUES(1963, 9999999, '2020-OCT-01')");
+            executePlainSQL("INSERT INTO eats VALUES(3419, 3729123, '2022-JUN-01')");
 
             OCICommit($db_conn);
         }
