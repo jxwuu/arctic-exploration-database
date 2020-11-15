@@ -39,7 +39,7 @@ CREATE TABLE Plants (
 	Colour char(50),
 	Age integer,
 	Height integer,
-	Description char(50),
+	Description char(100),
 	PRIMARY KEY (PlantID)
 )
 
@@ -49,7 +49,7 @@ CREATE TABLE Animal(
 	Description char(100), 
 	Species char(50), 
 	Name char(50) UNIQUE, 
-	Vertebrate bool, 
+	Vertebrate integer, 
 	PRIMARY KEY(AnimalID)
 )
 
@@ -258,53 +258,53 @@ CREATE TABLE  eats (
 -- Animal Table --
 
 INSERT INTO Animal
-VALUES(8910209, 'carnivore', 'third-largest rorqual after the blue whale and the fin whale', 'sei whale', 'Bert', true) 
+VALUES(8910209, 'carnivore', 'third-largest rorqual after the blue whale and the fin whale', 'sei whale', 'Bert', 1) 
 
 INSERT INTO Animal
-VALUES(2342123, 'carnivore', 'orca,largest member of oceanic dolphin family', 'killer whale', 'Ernie', true) 
+VALUES(2342123, 'carnivore', 'orca,largest member of oceanic dolphin family', 'killer whale', 'Ernie', 1) 
 
 INSERT INTO Animal
-VALUES(7028311, 'carnivore', 'can produce a song that lasts 10 to 20 minutes, also apart of rorqual', 'humpback whale', 'Elmo', true) 
+VALUES(7028311, 'carnivore', 'can produce a song that lasts 10 to 20 minutes, also apart of rorqual', 'humpback whale', 'Elmo', 1) 
 
 INSERT INTO Animal
-VALUES(8234812, 'carnivore', 'largest animal to ever exist', 'blue whale', 'Big Bird', true) 
+VALUES(8234812, 'carnivore', 'largest animal to ever exist', 'blue whale', 'Big Bird', 1) 
 
 INSERT INTO Animal
-VALUES(3333333, 'carnivore', 'formerly known as herring whale or razorback whale', 'fin whale', 'Kermit', true) 
+VALUES(3333333, 'carnivore', 'formerly known as herring whale or razorback whale', 'fin whale', 'Kermit', 1) 
 
--- Plant Table --
+-- Plants Table --
 
-INSERT INTO Plant
+INSERT INTO Plants
 VALUES(2323111, 'Deschampsia antarctica', 'green', 2, 2, 'fully grown Antarctic hair grass')
 
-INSERT INTO Plant
+INSERT INTO Plants
 VALUES(1111111, 'Colobanthus quitensis', 'yellow and green' , 1, 2, 'Antarctic pearlwort, mosslike with yellow flowers')
 
-INSERT INTO Plant
+INSERT INTO Plants
 VALUES(3123411, 'Deschampsia antarctica', 'green', 1, 1,'still relatively short antarctic hair grass')
 
-INSERT INTO Plant
+INSERT INTO Plants
 VALUES(1020304, 'Colobanthus quitensis', 'green', 1, 2, 'antarctic pearlwort, no flowers yet')
 
-INSERT INTO Plant
+INSERT INTO Plants
 VALUES(1991203, 'Colobanthus quitensis', 'yellow and green', 10, 12, 'antarctic pearlwort, has abundant amount of flowers' )
 
 -- Weather tables -
 
 INSERT INTO weather1
-VALUES(-25, 0.55, 0.04 ,16/10/2020) 
+VALUES(-25, 0.55, 0.04) 
 
 INSERT INTO weather1
-VALUES(-35, 0.43, 0.88 ,17/10/2020) 
+VALUES(-35, 0.43, 0.88) 
 
 INSERT INTO weather1
-VALUES(-42, 0.23, 0.92 ,18/10/2020) 
+VALUES(-42, 0.23, 0.92) 
 
 INSERT INTO weather1
-VALUES(-44, 0.33, 0.11 ,19/10/2020) 
+VALUES(-44, 0.33, 0.11) 
 
 INSERT INTO weather1
-VALUES(-26, 0.01, 0.69 ,20/10/2020) 
+VALUES(-26, 0.01, 0.69) 
 
 INSERT INTO weather2
 VALUES(0.55, 0.88)

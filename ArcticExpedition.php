@@ -21,14 +21,44 @@
             <p><input type="submit" value="Researcher Tab" name="gotoArcticExpeditionResearcher"></p>
         </form>
 
-        <h2>Count the Tuples in DemoTable</h2>
+        <h2>Count the Tuples in Persons</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
 
-        <h2>Display the Tuples in DemoTable</h2>
+        <h2>Display the Tuples</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            <label for="Name"> Display tuples in: </label>
+            <select name="table" id="table">
+                <option value="Person">Person</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Crew">Crew</option>
+                <option value="PersonalItem">PersonalItem</option>
+                <option value="Plants">Plants</option>
+                <option value="Animal">Animal</option>
+                <option value="Cargo">Cargo</option>
+                <option value="Food">Food</option>
+                <option value="ScientificEquipment">ScientificEquipment</option>
+                <option value="weather1">weather1</option>
+                <option value="weather2">weather2</option>
+                <option value="weather3">weather3</option>
+                <option value="location">location</option>
+                <option value="maxDist">maxDist</option>
+                <option value="arrivalDate">arrivalDate</option>
+                <option value="shipModel">shipModel</option>
+                <option value="ship">ship</option>
+                <option value="explorationVehicle1">explorationVehicle1</option>
+                <option value="explorationVehicle2">explorationVehicle2</option>
+                <option value="explorationVehicle3">explorationVehicle3</option>
+                <option value="uses">uses</option>
+                <option value="travelsTo">travelsTo</option>
+                <option value="takesOut">takesOut</option>
+                <option value="Studies">Studies</option>
+                <option value="consumes">consumes</option>
+                <option value="transportedBy">transportedBy</option>
+                <option value="eats">eats</option>
+            </select>
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
         </form>
@@ -71,6 +101,8 @@
             <select name="attribute2" id="attribute2">
                 <option value="personId">PersonID</option>
                 <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
                 <option value="weight">Weight</option>
                 <option value="height">Height</option>
             </select>
@@ -83,6 +115,25 @@
                 <option value=">=">greater than or equal to</option>
             </select>
             <input type="text" name="insNo"> <br /><br />
+            <label> and
+            <select name="attribute3" id="attribute3">
+                <option value="personId">PersonID</option>
+                <option value="age">Age</option>
+                <option value="name">Name</option>
+                <option value="gender">Gender</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+            </select>
+            <label> is
+            <select name="condition2" id="condition2">
+                <option value="<">less than</option>
+                <option value="<=">less than or equal to</option>
+                <option value="=">equal to </option>
+                <option value=">">greater than </option>
+                <option value=">=">greater than or equal to</option>
+            </select>
+            <input type="text" name="insNo2"> <br /><br />
+
             <input type="hidden" id="selectionDropDown" name="selectionDropDown">
             <input type="submit" name="selection2"></p>
         </form>
@@ -186,7 +237,7 @@
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_benson0", "a28598183", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_wuangus", "a37588688", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -217,58 +268,93 @@
             global $db_conn;
 
             echo "<br> inserting <br>";
-            executePlainSQL("INSERT INTO Person 
-            VALUES(9119119, 25, 'John', 'male', 87, 188) 
-            ");
 
-            executePlainSQL("INSERT INTO Person 
-            VALUES(1191191, 27, 'Sally', 'female', 72, 158) 
-            ");
+            executePlainSQL("INSERT INTO Animal VALUES(8910209, 'carnivore', 'third-largest rorqual after the blue whale and the fin whale', 'sei whale', 'Bert', 1)");
+            executePlainSQL("INSERT INTO Animal VALUES(2342123, 'carnivore', 'orca,largest member of oceanic dolphin family', 'killer whale', 'Ernie', 1)");
+            executePlainSQL("INSERT INTO Animal VALUES(7028311, 'carnivore', 'can produce a song that lasts 10 to 20 minutes, also apart of rorqual', 'humpback whale', 'Elmo', 1)");
+            executePlainSQL("INSERT INTO Animal VALUES(8234812, 'carnivore', 'largest animal to ever exist', 'blue whale', 'Big Bird', 1)");
+            executePlainSQL("INSERT INTO Animal VALUES(3333333, 'carnivore', 'formerly known as herring whale or razorback whale', 'fin whale', 'Kermit', 1)");
+            executePlainSQL("INSERT INTO Plants VALUES(2323111, 'Deschampsia antarctica', 'green', 2, 2, 'fully grown Antarctic hair grass')");
+            executePlainSQL("INSERT INTO Plants VALUES(1111111, 'Colobanthus quitensis', 'yellow and green' , 1, 2, 'Antarctic pearlwort, mosslike with yellow flowers')");
+            executePlainSQL("INSERT INTO Plants VALUES(3123411, 'Deschampsia antarctica', 'green', 1, 1,'still relatively short antarctic hair grass')");
+            executePlainSQL("INSERT INTO Plants VALUES(1020304, 'Colobanthus quitensis', 'green', 1, 2, 'antarctic pearlwort, no flowers yet')");
+            executePlainSQL("INSERT INTO Plants VALUES(1991203, 'Colobanthus quitensis', 'yellow and green', 10, 12, 'antarctic pearlwort, has abundant amount of flowers')");
+            executePlainSQL("INSERT INTO weather1 VALUES(-25, 0.55, 0.04)");
+            executePlainSQL("INSERT INTO weather1 VALUES(-35, 0.43, 0.88)");
+            executePlainSQL("INSERT INTO weather1 VALUES(-42, 0.23, 0.92)");
+            executePlainSQL("INSERT INTO weather1 VALUES(-44, 0.33, 0.11)");
+            executePlainSQL("INSERT INTO weather1 VALUES(-26, 0.01, 0.69)");
+            executePlainSQL("INSERT INTO weather2 VALUES(0.55, 0.88)");
+            executePlainSQL("INSERT INTO weather2 VALUES(0.43, 0.23)");
+            executePlainSQL("INSERT INTO weather2 VALUES(0.23, 0.11)");
+            executePlainSQL("INSERT INTO weather2 VALUES(0.33, 0.22)");
+            executePlainSQL("INSERT INTO weather2 VALUES(0.03, 0.33)");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
+            executePlainSQL("");
 
-            executePlainSQL("INSERT INTO Person 
-            VALUES(1111119, 28, 'Adam', 'male', 80, 162) 
-            ");
 
-            executePlainSQL("INSERT INTO Person 
-            VALUES(1234231, 20, 'Benson', 'male', 80, 210) 
-            ");
             OCICommit($db_conn);
         }
 
         function handleResetRequest() {
             global $db_conn;
             // Drop old table
-            // executePlainSQL("DROP TABLE Researcher");
-            // executePlainSQL("DROP TABLE Crew");
-            // executePlainSQL("DROP TABLE PersonalItem");
-            // executePlainSQL("DROP TABLE Plants");
-            // executePlainSQL("DROP TABLE Animal");
-            // executePlainSQL("DROP TABLE Food");
-            // executePlainSQL("DROP TABLE ScientificEquipment");
-            // executePlainSQL("DROP TABLE weather1");
-            // executePlainSQL("DROP TABLE weather2");
-            // executePlainSQL("DROP TABLE weather3");
-            // executePlainSQL("DROP TABLE location");
-            // executePlainSQL("DROP TABLE maxDist");
-            // executePlainSQL("DROP TABLE arrivalDate");
-            // executePlainSQL("DROP TABLE shipModel");
-            // executePlainSQL("DROP TABLE ship");
-            // executePlainSQL("DROP TABLE explorationVehicle1");
-            // executePlainSQL("DROP TABLE explorationVehicle2");
-            // executePlainSQL("DROP TABLE explorationVehicle3");
-            // executePlainSQL("DROP TABLE uses");
-            // executePlainSQL("DROP TABLE travelsTo");
-            // executePlainSQL("DROP TABLE takesOut");
-            // executePlainSQL("DROP TABLE Studies");
-            // executePlainSQL("DROP TABLE consumes");
-            // executePlainSQL("DROP TABLE transportedBy");
-            // executePlainSQL("DROP TABLE eats");
-
-            /**
-             * all tables referenced as foreign keys must be dropped last
-             */ 
-            // executePlainSQL("DROP TABLE Person");
-            // executePlainSQL("DROP TABLE Cargo");
+            executePlainSQL("DROP TABLE Studies");
+            executePlainSQL("DROP TABLE uses");
+            executePlainSQL("DROP TABLE Researcher");
+            executePlainSQL("DROP TABLE Crew");
+            executePlainSQL("DROP TABLE PersonalItem");
+            executePlainSQL("DROP TABLE Food");
+            executePlainSQL("DROP TABLE ScientificEquipment");
+            executePlainSQL("DROP TABLE weather3");
+            executePlainSQL("DROP TABLE travelsTo");
+            executePlainSQL("DROP TABLE takesOut");
+            executePlainSQL("DROP TABLE consumes");
+            executePlainSQL("DROP TABLE transportedBy");
+            executePlainSQL("DROP TABLE eats");
+            executePlainSQL("DROP TABLE Plants");
+            executePlainSQL("DROP TABLE Animal");
+            executePlainSQL("DROP TABLE weather1");
+            executePlainSQL("DROP TABLE weather2");
+            executePlainSQL("DROP TABLE location");
+            executePlainSQL("DROP TABLE maxDist");
+            executePlainSQL("DROP TABLE arrivalDate");
+            executePlainSQL("DROP TABLE shipModel");
+            executePlainSQL("DROP TABLE ship");
+            executePlainSQL("DROP TABLE explorationVehicle1");
+            executePlainSQL("DROP TABLE explorationVehicle2");
+            executePlainSQL("DROP TABLE explorationVehicle3");
+            executePlainSQL("DROP TABLE Person");
+            executePlainSQL("DROP TABLE Cargo");
 
             /**
              * ALL THE TABLES W/O DEPENDENCIES
@@ -289,7 +375,7 @@
                 Colour char(50),
                 Age integer,
                 Height integer,
-                Description char(50),
+                Description char(100),
                 PRIMARY KEY (PlantID)
             )");
             executePlainSQL("CREATE TABLE Animal(
@@ -298,7 +384,7 @@
                 Description char(100), 
                 Species char(50), 
                 Name char(50) UNIQUE, 
-                Vertebrate char(1), 
+                Vertebrate integer, 
                 PRIMARY KEY(AnimalID)
             )");
             executePlainSQL("CREATE TABLE Cargo (
@@ -494,15 +580,6 @@
                 FOREIGN KEY (CargoID) REFERENCES Cargo
                     ON DELETE CASCADE
             )");
-            executePlainSQL("CREATE TABLE consumes(
-                AnimalID1 integer,
-                AnimalID2 integer,
-                PRIMARY KEY (AnimalID1, AnimalID2),
-                FOREIGN KEY (AnimalID1) REFERENCES Animal
-                    ON DELETE CASCADE,
-                FOREIGN KEY (AnimalID2) REFERENCES Animal
-                    ON DELETE CASCADE
-            )");      
             executePlainSQL("CREATE TABLE  eats (
                 CargoID integer,
                 PersonID integer,
@@ -513,6 +590,8 @@
                 FOREIGN KEY (PersonID) REFERENCES Person
                     ON DELETE CASCADE
             )"); 
+
+            echo "<br> Done creating tables <br>";
 
             OCICommit($db_conn);
         }
@@ -530,7 +609,16 @@
         function handleDisplayRequest() {
             global $db_conn;
 
-            displayPeopleHelper($db_conn);
+            $table = $_GET['table'];
+
+            $result = executePlainSQL("SELECT * FROM $table");
+            while (($row = oci_fetch_row($result)) != false) {
+                print "<pre>";
+                print_r($row);
+                print "</pre>";
+            }
+
+           // displayPeopleHelper($db_conn);
         }
 
         function displayPeopleHelper($db_conn) {
@@ -585,8 +673,22 @@
             $attribute2 = $_POST['attribute2'];
             $condition = $_POST['condition'];
             $number = $_POST['insNo'];
+            $attribute3 = $_POST['attribute3'];
+            $condition2 = $_POST['condition2'];
+            $number2 = $_POST['insNo2'];
+            
+            $boolean = ctype_digit($number);
+            $boolean2 = ctype_digit($number2);
 
-            $result = executePlainSQL("SELECT $attribute1 FROM Person WHERE $attribute2 $condition $number");
+            if (!$boolean) {
+                $number= '\'' . $number . '\'';
+            }
+
+            if (!$boolean2) {
+                $number2= '\'' . $number2 . '\'';
+            }
+
+            $result = executePlainSQL("SELECT $attribute1 FROM Person WHERE $attribute2 $condition $number AND $attribute3 $condition2 $number2");
             
             echo "<br>Retrieved data from Person Table:<br>";
             echo "<table>";
