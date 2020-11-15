@@ -353,6 +353,21 @@ VALUES(9999999, 38, 'Betty', 'female', 73, 174)
 INSERT INTO Person 
 VALUES(3729123, 42, 'Alex', 'nonbinary', 56, 142)
 
+INSERT INTO Person 
+VALUES(1234567, 28, 'Frankie', 'male', 87, 188)
+
+INSERT INTO Person 
+VALUES(1212121, 25, 'Boro', 'female', 72, 158)
+
+INSERT INTO Person 
+VALUES(2323232, 36, 'Tedd', 'male', 80, 162)
+
+INSERT INTO Person 
+VALUES(3434343, 38, 'Amanda', 'female', 73, 174)
+
+INSERT INTO Person 
+VALUES(4545454, 42, 'Alysha', 'nonbinary', 56, 142)
+
 -- Researcher Table --
 
 INSERT INTO researcher 
@@ -373,19 +388,19 @@ VALUES(9999999, 'biology')
 -- Crew table -- 
 
 INSERT INTO crew
-VALUES(9999999, "Ship Captain", 2456371)
+VALUES(1234567, 'Ship Captain')
 
 INSERT INTO crew
-VALUES(9328712, "Janitor of Ship", 2382719) 
+VALUES(1212121, 'Janitor of Ship') 
 
 INSERT INTO crew
-VALUES(2348791, "Engine Crew", 4328751) 
+VALUES(2323232, 'Engine Crew') 
 
 INSERT INTO crew
-VALUES(3321879, "Engine Crew", 6668928) 
+VALUES(3434343, 'Engine Crew') 
 
 INSERT INTO crew
-VALUES(3427212, "Exploration Vehicle Driver", 8971234) 
+VALUES(4545454, 'Exploration Vehicle Driver') 
 
 -- ScientificEquipment Table --
 

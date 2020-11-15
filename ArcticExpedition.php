@@ -318,11 +318,11 @@
             executePlainSQL("INSERT INTO weather3 VALUES(-42, 43, '18-OCT-2020', 0.56, 89, 127)");
             executePlainSQL("INSERT INTO weather3 VALUES(-44, 55, '19-OCT-2020', 0.88, 85, 130)");
             executePlainSQL("INSERT INTO weather3 VALUES(-26, 22, '20-OCT-2020', 0.82, 86, 128)");
-            executePlainSQL(""); // CREW CHECK JOBS
-            executePlainSQL(""); // CREW CHECK JOBS
-            executePlainSQL(""); // CREW CHECK JOBS
-            executePlainSQL(""); // CREW CHECK JOBS
-            executePlainSQL(""); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO crew VALUES(1234567, 'Ship Captain')"); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO crew VALUES(1212121, 'Janitor of Ship')"); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO crew VALUES(2323232, 'Engine Crew') "); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO crew VALUES(3434343, 'Engine Crew') "); // CREW CHECK JOBS
+            executePlainSQL("INSERT INTO crew VALUES(4545454, 'Exploration Vehicle Driver')"); // CREW CHECK JOBS
             executePlainSQL("INSERT INTO Cargo VALUES(8972)");
             executePlainSQL("INSERT INTO Cargo VALUES(3487)");
             executePlainSQL("INSERT INTO Cargo VALUES(3232)");
