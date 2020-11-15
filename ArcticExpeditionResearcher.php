@@ -4,12 +4,25 @@
     </head>
 
     <body>
+
+        <form method="POST" action="ArcticExpedition.php">
+            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
+            <input type="hidden" id="gotoArcticExpeditionResearcher" name="gotoArcticExpeditionResearcher">
+            <p><input type="submit" value="Main Tab" name="gotoArcticExpeditionResearcher"></p>
+        </form>
+
         <hr />
 
         <h2>Display the Tuples in DemoTable</h2>
         <form method="GET" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
             <input type="hidden" id="displayTupleRequest" name="displayTupleRequest">
             <input type="submit" name="displayTuples"></p>
+        </form>
+
+        <h2>Find Researcher(s) Who is Studying every Animal on Record</h2>
+        <form method="GET" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="findResearcherStudyingAllAnimalsRequest" name="findResearcherStudyingAllAnimalsRequest">
+            <input type="submit" value="Find" name="findResearcherStudyingAllAnimals"></p>
         </form>
 
         <?php
@@ -142,27 +155,36 @@
             }
         }
 
-        // TODO: show all tuples -> id and name
-        function showTuplesRequest() {
+        function findResearcherStudyingAllAnimals() {
             global $db_conn;
+            
+            $result = executePlainSQL("SELECT r.PersonID 
+                                       FROM Researcher r 
+                                       WHERE not exists ( SELECT a.animalID
+                                                          FROM animal a 
+                                                          WHERE not exists ( SELECT s.PersonID
+                                                                            FROM Studies s
+                                                                            Where r.PersonID = s.PersonID 
+                                                                            AND a.AnimalID = s.AnimalID))
+                                       ");
+            
+            echo "Researcher(s): <br>";
 
-            $result = executePlainSQL("SELECT id, name FROM demoTable");
-
-            printResult($result);
+            while ($row = OCI_Fetch_Array($result)) {
+                
+                echo "<tr><td>" . $row[0] . "<br></td></tr>";
+            }
         }
 
+        
         // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
     function handleGETRequest() {
         if (connectToDB()) {
-            if (array_key_exists('countTuples', $_GET)) {
-                handleCountRequest();
-            } else if (array_key_exists('displayTuples', $_GET)) {
+            if (array_key_exists('displayTuples', $_GET)) {
                 handleDisplayRequest();
-            } else if (array_key_exists('selection', $_GET)) {
-                handleSelectionRequest();
-            } else if (array_key_exists('projection', $_GET)) {
-                handleProjectionRequest();
+            } else if (array_key_exists('findResearcherStudyingAllAnimals', $_GET)) {
+                findResearcherStudyingAllAnimals();
             }
 
             disconnectFromDB();
@@ -174,21 +196,13 @@
      */
     function handlePOSTRequest() {
         if (connectToDB()) {
-            if (array_key_exists('initializeTables', $_POST)) {
-                handleInitializeAllTables();
-            } else if (array_key_exists('resetTablesRequest', $_POST)) {
-                handleResetRequest();
-            } else if (array_key_exists('selection2', $_POST)) {
-                handleSelectionRequest2();
-            }
-
             disconnectFromDB();
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
+    if (isset($_POST['selectionDropDown'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['displayTupleRequest'])) {
+    } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest'])) {
         handleGETRequest();
     }
 		?>
