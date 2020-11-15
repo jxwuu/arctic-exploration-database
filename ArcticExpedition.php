@@ -31,12 +31,12 @@
         <h2>Insert Values into Person Table</h2>
         <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            PersonID: <input type="text" name="insPID"> <br /><br />
-            Age: <input type="text" name="insAge"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
-            Gender: <input type="text" name="insGender"> <br /><br />
-            Weight: <input type="text" name="insWeight"> <br /><br />
-            Height: <input type="text" name="insHeight"> <br /><br />
+            PersonID: <input type="text" name="PID"> <br /><br />
+            Age: <input type="text" name="Age"> <br /><br />
+            Name: <input type="text" name="Name"> <br /><br />
+            Gender: <input type="text" name="Gender"> <br /><br />
+            Weight: <input type="text" name="Weight"> <br /><br />
+            Height: <input type="text" name="Height"> <br /><br />
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
         <hr />
@@ -766,12 +766,12 @@
 
             //Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind1" => $_POST['insPID'],
-                ":bind2" => $_POST['insAge'],
-                ":bind3" => $_POST['insName'],
-                ":bind4" => $_POST['insGender'],
-                ":bind5" => $_POST['insWeight'],
-                ":bind6" => $_POST['insHeight']
+                ":bind1" => $_POST['PID'],
+                ":bind2" => $_POST['Age'],
+                ":bind3" => $_POST['Name'],
+                ":bind4" => $_POST['Gender'],
+                ":bind5" => $_POST['Weight'],
+                ":bind6" => $_POST['Height']
             );
 
             $alltuples = array (
