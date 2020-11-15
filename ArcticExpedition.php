@@ -279,6 +279,25 @@
             executePlainSQL("INSERT INTO Plants VALUES(3123411, 'Deschampsia antarctica', 'green', 1, 1,'still relatively short antarctic hair grass')");
             executePlainSQL("INSERT INTO Plants VALUES(1020304, 'Colobanthus quitensis', 'green', 1, 2, 'antarctic pearlwort, no flowers yet')");
             executePlainSQL("INSERT INTO Plants VALUES(1991203, 'Colobanthus quitensis', 'yellow and green', 10, 12, 'antarctic pearlwort, has abundant amount of flowers')");
+            executePlainSQL("INSERT INTO Person VALUES(9119119, 28, 'John', 'male', 87, 188)");
+            executePlainSQL("INSERT INTO Person VALUES(1191191, 25, 'Sally', 'female', 72, 158)");
+            executePlainSQL("INSERT INTO Person VALUES(1111119, 36, 'Adam', 'male', 80, 162)");
+            executePlainSQL("INSERT INTO Person VALUES(9999999, 38, 'Betty', 'female', 73, 174)");
+            executePlainSQL("INSERT INTO Person VALUES(3729123, 42, 'Alex', 'nonbinary', 56, 142)");
+            executePlainSQL("INSERT INTO researcher VALUES(9119119, 'biology') ");
+            executePlainSQL("INSERT INTO researcher VALUES(1191191, 'chemistry')");
+            executePlainSQL("INSERT INTO researcher VALUES(3729123, 'biology')");
+            executePlainSQL("INSERT INTO researcher VALUES(1111119, 'botany')");
+            executePlainSQL("INSERT INTO researcher VALUES(9999999, 'biology')");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 8910209, 2323111)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 2342123, 1111111)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 7028311, 3123411)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 8234812, 1020304)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 3333333, 1991203)");
+            executePlainSQL("INSERT INTO Studies VALUES(1191191, 2342123,1111111)");
+            executePlainSQL("INSERT INTO Studies VALUES(3729123, 7028311,3123411)");
+            executePlainSQL("INSERT INTO Studies VALUES(9999999, 8234812,1020304)");
+            executePlainSQL("INSERT INTO Studies VALUES(1111119, 3333333,1991203)");
             executePlainSQL("INSERT INTO location VALUES(85, 132, 'desert')");
             executePlainSQL("INSERT INTO location VALUES(87, 122, 'desert')");
             executePlainSQL("INSERT INTO location VALUES(89, 127, 'desert')");
@@ -299,16 +318,6 @@
             executePlainSQL("INSERT INTO weather3 VALUES(-42, 43, '18-OCT-2020', 0.56, 89, 127)");
             executePlainSQL("INSERT INTO weather3 VALUES(-44, 55, '19-OCT-2020', 0.88, 85, 130)");
             executePlainSQL("INSERT INTO weather3 VALUES(-26, 22, '20-OCT-2020', 0.82, 86, 128)");
-            executePlainSQL("INSERT INTO Person VALUES(9119119, 28, 'John', 'male', 87, 188)");
-            executePlainSQL("INSERT INTO Person VALUES(1191191, 25, 'Sally', 'female', 72, 158)");
-            executePlainSQL("INSERT INTO Person VALUES(1111119, 36, 'Adam', 'male', 80, 162)");
-            executePlainSQL("INSERT INTO Person VALUES(9999999, 38, 'Betty', 'female', 73, 174)");
-            executePlainSQL("INSERT INTO Person VALUES(3729123, 42, 'Alex', 'nonbinary', 56, 142)");
-            executePlainSQL("INSERT INTO researcher VALUES(9119119, 'biology') ");
-            executePlainSQL("INSERT INTO researcher VALUES(1191191, 'chemistry')");
-            executePlainSQL("INSERT INTO researcher VALUES(3729123, 'biology')");
-            executePlainSQL("INSERT INTO researcher VALUES(1111119, 'botany')");
-            executePlainSQL("INSERT INTO researcher VALUES(9999999, 'biology')");
             executePlainSQL(""); // CREW CHECK JOBS
             executePlainSQL(""); // CREW CHECK JOBS
             executePlainSQL(""); // CREW CHECK JOBS
@@ -380,11 +389,6 @@
             executePlainSQL("INSERT INTO travelsTo VALUES(3729123, 83, 130, '2000-MAY-27')");
             executePlainSQL("INSERT INTO travelsTo VALUES(2347192, 83, 130, '2000-MAY-27')");
             executePlainSQL("INSERT INTO travelsTo VALUES(9871234, 83, 130, '2000-MAY-27')");
-            executePlainSQL("INSERT INTO Studies VALUES(9119119, 8910209,2323111)");
-            executePlainSQL("INSERT INTO Studies VALUES(1191191, 2342123,1111111)");
-            executePlainSQL("INSERT INTO Studies VALUES(3729123, 7028311,3123411)");
-            executePlainSQL("INSERT INTO Studies VALUES(2347192, 8234812,1020304)");
-            executePlainSQL("INSERT INTO Studies VALUES(9871234, 3333333,1991203)");
             executePlainSQL("INSERT INTO consumes VALUES(8910209, 3847212)");
             executePlainSQL("INSERT INTO consumes VALUES(2342123, 4239847)");
             executePlainSQL("INSERT INTO consumes VALUES(7028311, 5746384)");
