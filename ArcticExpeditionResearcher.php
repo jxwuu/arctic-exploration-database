@@ -158,14 +158,17 @@
         function findResearcherStudyingAllAnimals() {
             global $db_conn;
             
-            $result = executePlainSQL("SELECT r.PersonID 
-                                       FROM Researcher r 
-                                       WHERE not exists ( SELECT a.animalID
-                                                          FROM animal a 
-                                                          WHERE not exists ( SELECT s.PersonID
-                                                                            FROM Studies s
-                                                                            Where r.PersonID = s.PersonID 
-                                                                            AND a.AnimalID = s.AnimalID))
+            $result = executePlainSQL("SELECT p.name
+                                        FROM Person p
+                                        WHERE p.personID in (
+                                                    SELECT r.PersonID 
+                                                    FROM Researcher r 
+                                                    WHERE not exists ( SELECT a.animalID
+                                                                        FROM animal a 
+                                                                        WHERE not exists ( SELECT s.PersonID
+                                                                                            FROM Studies s
+                                                                                            Where r.PersonID = s.PersonID 
+                                                                                            AND a.AnimalID = s.AnimalID)))
                                        ");
             
             echo "Researcher(s): <br>";

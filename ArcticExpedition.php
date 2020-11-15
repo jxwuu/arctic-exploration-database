@@ -398,6 +398,8 @@
             executePlainSQL("INSERT INTO studies VALUES(9119119, 7028311, 3123411)");
             executePlainSQL("INSERT INTO studies VALUES(9119119, 8234812, 1020304)");
             executePlainSQL("INSERT INTO studies VALUES(9119119, 3333333, 1991203)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 4343434, 1991203)");
+            executePlainSQL("INSERT INTO studies VALUES(9119119, 4123122, 1991203)");
             executePlainSQL("INSERT INTO studies VALUES(9999999, 3333333, 1991203)");
             executePlainSQL("INSERT INTO studies VALUES(1111119, 3333333, 1991203)");
             executePlainSQL("INSERT INTO Studies VALUES(1191191, 2342123, 1111111)");
