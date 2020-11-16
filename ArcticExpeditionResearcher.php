@@ -25,6 +25,84 @@
             <input type="submit" value="Find" name="findResearcherStudyingAllAnimals"></p>
         </form>
 
+        <h2>Find count of research items</h2>
+        <form method="GET" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
+            <label>Select:
+                <select name="mainMenu" id="mainMenu" onchange="displayAccordingly()">
+                    <option value="">--</option>
+                    <option value="animal">Animal(s) on Record</option>
+                    <option value="plants">Plant(s) on Record</option>
+                    <option value="scientificEquipment">Scientific Equipment</option>
+                </select>
+                <br>
+            </label>
+            <label>Group: 
+                <select name="aggregationGroupBy" id="aggregationGroupBy"></select>
+                
+
+            <input type="hidden" id="findCountResearchItemsRequest" name="findCountResearchItemsRequest">
+            <input type="submit" value="Find" name="findCountResearchItems"></p>
+        </form>
+
+        <hr/>
+        <h2> RESULT OF QUERY: </h2>
+
+        <script type="text/javascript">
+            var created = 0;
+
+            function displayAccordingly() {
+                removeDrop();
+                //Call mainMenu the main dropdown menu
+                var mainMenu = document.getElementById('mainMenu');
+
+                //Create the new dropdown menu
+
+                // var whereToPut = document.getElementById('aggregationGroupBy');
+                // var newDropdown = document.createElement('select');
+                // newDropdown.setAttribute('id',"groupByTable");
+                console.log("what the hell");
+                var whereToPut = document.getElementById('aggregationGroupBy');
+
+                if (mainMenu.value == "animal") {
+                    //Add an option called "Vertebrate"
+                    var optionVertebrate=document.createElement("option");
+                    optionVertebrate.text="is Vertebrate";
+                    optionVertebrate.value="Vertebrate";
+                    whereToPut.appendChild(optionVertebrate);
+
+                    //Add an option called "diet type"
+                    var optionDiet=document.createElement("option");
+                    optionDiet.text="Diet Type";
+                    optionDiet.value="diet";
+                    whereToPut.appendChild(optionDiet);
+
+                } else if (mainMenu.value == "plants") { 
+                    //Add an option called "2 years or older"
+                    var optionTwoYearsOrOlder=document.createElement("option");
+                    optionTwoYearsOrOlder.text="of same age";
+                    optionTwoYearsOrOlder.value="age";
+                    whereToPut.appendChild(optionTwoYearsOrOlder);
+                } else 
+                if (mainMenu.value == "scientificEquipment") { 
+                    //Add an option called "Fragile"
+                    var optionFragile=document.createElement("option");
+                    optionFragile.text="is Fragile";
+                    optionFragile.value="Fragile";
+                    whereToPut.appendChild(optionFragile);
+                }
+
+                created = 1
+            }
+
+            function removeDrop() {
+                var d = document.getElementById('aggregationGroupBy');
+                while(d.options.length > 0) {
+                    d.remove(0);
+                }
+            }
+            
+        </script>
+
         <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
@@ -179,6 +257,49 @@
             }
         }
 
+        function findCountResearchItems() {
+            global $db_conn;
+
+            $table = $_GET['mainMenu'];
+            $groupBy = $_GET['aggregationGroupBy'];
+
+            $total = executePlainSQL("SELECT count(*)
+                                        FROM $table");
+
+            $result = executePlainSQL("SELECT $groupBy, count(*)
+                                        FROM $table
+                                        GROUP BY $groupBy");
+            //echo $table;
+            //echo $groupBy;
+            //echo "hi!";
+
+            // only one row since entire table aggregation
+            $rowTotal = OCI_Fetch_Array($total);
+            echo "Total count in $table: " . $rowTotal[0] . "<br>";
+
+            if ($groupBy == "Vertebrate" || $groupBy == "Fragile") {
+                while ($row = OCI_Fetch_Array($result)) {
+                    if ($row[0] == 0) {
+                        $currGroup = "not $groupBy";
+                    } else if ($row[0] == 1) {
+                        $currGroup = $groupBy;
+                    }
+                    
+                    echo "<tr><td> All which are $currGroup: $row[1] items<br></td></tr>";
+                }
+            } else if ($groupBy == "age" && $table == "plants") {
+                while ($row = OCI_Fetch_Array($result)) {
+                    echo "<tr><td> Number of plants age $row[0]: $row[1]<br></td></tr>";
+                }
+            } else if ($groupBy == "diet" && $table == "animal") {
+                while ($row = OCI_Fetch_Array($result)) {
+                    echo "<tr><td> Number of animals with diet type of $row[0]: $row[1]<br></td></tr>";
+                }
+            }
+            //echo "<br> All which are $groupBy is $result items <br>";
+
+        }
+
         
         // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -188,6 +309,8 @@
                 handleDisplayRequest();
             } else if (array_key_exists('findResearcherStudyingAllAnimals', $_GET)) {
                 findResearcherStudyingAllAnimals();
+            } else if (array_key_exists('findCountResearchItems', $_GET)) {
+                findCountResearchItems();
             }
 
             disconnectFromDB();
@@ -205,7 +328,7 @@
 
     if (isset($_POST['selectionDropDown'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest'])) {
+    } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest']) || isset($_GET["findCountResearchItemsRequest"])) {
         handleGETRequest();
     }
 		?>
