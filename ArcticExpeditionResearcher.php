@@ -44,6 +44,22 @@
             <input type="submit" value="Find" name="findCountResearchItems"></p>
         </form>
 
+        <!--<form method="POST" action="oracle-test.php">
+        <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+            Old Name: <input type="text" name="oldName"> <br /><br />
+            New Name: <input type="text" name="newName"> <br /><br />
+
+            <input type="submit" value="Update" name="updateSubmit"></p>
+        </form>-->
+
+        <h2>Update Plant Age</h2>
+        <form method="POST" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
+            PlantID: <input type="number" name="plantID"> <br>
+            new Age: <input type="number" name="age"> <br>
+            <input type="hidden" id="updatePlantAgeSubmit" name="updatePlantAgeSubmit">
+            <input type="submit" value="Update" name="updatePlantAge"></p>
+        </form>
+
         <hr/>
         <h2> RESULT OF QUERY: </h2>
 
@@ -288,7 +304,19 @@
                     echo "<tr><td> Number of animals with diet type of $row[0]: $row[1]<br></td></tr>";
                 }
             }
+            //echo "<br> All which are $groupBy is $result items <br>";
 
+        }
+
+        function handleUpdatePlantAgeSubmit() {
+            global $db_conn;
+
+            $plantID = $_POST['plantID'];
+            $newPlantAge = $_POST['age'];
+
+            echo "Updating plantID: $plantID to age $newPlantAge";
+            executePlainSQL("UPDATE plants SET age=$newPlantAge WHERE plantID=$plantID");
+            OCICommit($db_conn);
         }
 
         
@@ -313,11 +341,14 @@
      */
     function handlePOSTRequest() {
         if (connectToDB()) {
+            if (array_key_exists('updatePlantAge', $_POST)) {
+                handleUpdatePlantAgeSubmit();
+            }
             disconnectFromDB();
         }
     }
 
-    if (isset($_POST['selectionDropDown'])) {
+    if (isset($_POST['updatePlantAgeSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest']) || isset($_GET["findCountResearchItemsRequest"])) {
         handleGETRequest();
