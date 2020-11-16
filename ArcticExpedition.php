@@ -431,7 +431,7 @@
             executePlainSQL("INSERT INTO Person VALUES(1212121, 25, 'Boro', 'female', 72, 158)");
             executePlainSQL("INSERT INTO Person VALUES(2323232, 36, 'Tedd', 'male', 80, 162)");
             executePlainSQL("INSERT INTO Person VALUES(3434343, 38, 'Amanda', 'female', 73, 174)");
-            executePlainSQL("INSERT INTO Person VALUES(4545454, 42, 'Alysha', 'nonbinary', 56, 142)");
+            executePlainSQL("INSERT INTO Person VALUES(4545454, 30, 'Alysha', 'nonbinary', 55, 122)");
             executePlainSQL("INSERT INTO researcher VALUES(9119119, 'biology') ");
             executePlainSQL("INSERT INTO researcher VALUES(1191191, 'chemistry')");
             executePlainSQL("INSERT INTO researcher VALUES(3729123, 'biology')");
