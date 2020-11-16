@@ -1102,11 +1102,7 @@
         }
     }
 
-<<<<<<< HEAD
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])|| isset($_POST['deletionRequest'])) {
-=======
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown']) || isset($_POST['deletionRequest'])) {
->>>>>>> 56ae439bf511c6e81f6610d4d6aa7f4254e995fa
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest']) || isset($_GET['joinRequest'])) {
         handleGETRequest();
