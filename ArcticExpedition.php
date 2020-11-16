@@ -257,6 +257,21 @@
         </form>
         <hr />
 
+        <h2>Find the Age of People who have Taken out a vehicle</h2>
+        <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+        Give me the
+            <select name="minMaxAvg" id="minMaxAvg">
+                <option value="">--- Select ---</option>
+                <option value="MIN(p.age)">Minimum</option>
+                <option value="MAX(p.age)">Maximum</option>
+                <option value="AVG(p.age)">Average</option>
+            </select>
+            age
+            <input type="hidden" id="groupByRequest" name="groupByRequest">
+            <input type="submit" name="groupBy"></p>
+        </form>
+        <hr />
+
     </body>
 
 
@@ -525,6 +540,11 @@
             executePlainSQL("INSERT INTO takesOut VALUES(1111119, 66273, 'near the edge with the sea lions ', '12-MAY-2018')"); 
             executePlainSQL("INSERT INTO takesOut VALUES(9999999, 34578, 'south of the abundance of shrubbery', '17-APR-2016')"); 
             executePlainSQL("INSERT INTO takesOut VALUES(3729123, 89723, 'near the west edge of the ice', '27-MAR-2017')");  
+            executePlainSQL("INSERT INTO takesOut VALUES(1234567, 66273, 'North of the edge of the sea', '27-JUN-2005')");
+            executePlainSQL("INSERT INTO takesOut VALUES(1212121, 98127, 'east of the beach of with flowers', '19-APR-2014')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(2323232, 34578, 'near the cliff with the orca whales', '18-JUN-2015')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(3434343, 89723, 'south of the edge of the larger iceberg', '21-APR-2019')"); 
+            executePlainSQL("INSERT INTO takesOut VALUES(4545454, 98127, 'west of the highest cliff', '14-MAY-2007')");  
             executePlainSQL("INSERT INTO transportedBy VALUES('U6CH', 9119119, 8972)");
             executePlainSQL("INSERT INTO transportedBy VALUES('USMW', 1191191, 3487)");
             executePlainSQL("INSERT INTO transportedBy VALUES('PCSUM', 1111119, 3232)");
@@ -536,6 +556,7 @@
             executePlainSQL("INSERT INTO eats VALUES(2142, 9999999, '01-OCT-2001')");
             executePlainSQL("INSERT INTO eats VALUES(1612, 3729123, '01-JUN-2001')");
 
+            echo "<br> done inserting <br>";
             OCICommit($db_conn);
         }
 
@@ -667,8 +688,6 @@
                 DistanceTraveled integer,
                 PRIMARY KEY (VehicleID)
             )"); 
-
-
 
             /**
              * TABLES W/ DEPENDENCIES
@@ -826,7 +845,7 @@
             $table = $_GET['table'];
 
             $result = executePlainSQL("SELECT * FROM $table");
-            while (($row = oci_fetch_row($result)) != false) {
+            while ($row = oci_fetch_row($result)) {
                 print "<pre>";
                 print_r($row);
                 print "</pre>";
@@ -1030,6 +1049,31 @@
             OCICommit($db_conn);
         }
 
+        function handleGroupsByRequest() {
+            global $db_conn;
+
+            $minxMaxAvg = $_POST['minMaxAvg'];
+            $result = executePlainSQL("SELECT ev.VehicleType, $minxMaxAvg
+            FROM Person p, takesOut t, explorationVehicle3 ev
+            WHERE p.PersonID = t.PersonID AND t.VehicleID = ev.VehicleID
+            GROUP BY ev.VehicleType");
+
+                $x = "";
+            if($minxMaxAvg == "MIN(p.age)") {
+                $x = "minimum";
+            } else if ($minxMaxAvg == "MAX(p.age)") {
+                $x = "maximum";
+            } else if ($minxMaxAvg == "AVG(p.age)") {
+                $x = "average";
+            }
+ 
+            while ($row = oci_fetch_row($result)) {
+                $vehicleType = $row[0];
+                $age = round($row[1], 2);
+
+                echo "<br> The " . $x . " age of people who took out a " . $vehicleType . " is " . $age . "<br>";
+            }
+        }
 
         function printResult($result) { //prints results from a select statement
             echo "<br>DATA FROM TABLES:<br>";
@@ -1079,7 +1123,8 @@
                 handleInsertRequest();
             } else if (array_key_exists('deletion', $_POST)) {
                 handleDeletionRequest();
-
+            } else if (array_key_exists('groupBy', $_POST)) {
+                handleGroupsByRequest();
             }
             
 
@@ -1087,7 +1132,8 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])|| isset($_POST['deletionRequest'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])|| isset($_POST['deletionRequest']) ||
+        isset($_POST['groupByRequest'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest']) || isset($_GET['joinRequest'])) {
         handleGETRequest();
