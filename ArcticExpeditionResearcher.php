@@ -56,11 +56,6 @@
                 var mainMenu = document.getElementById('mainMenu');
 
                 //Create the new dropdown menu
-
-                // var whereToPut = document.getElementById('aggregationGroupBy');
-                // var newDropdown = document.createElement('select');
-                // newDropdown.setAttribute('id',"groupByTable");
-                console.log("what the hell");
                 var whereToPut = document.getElementById('aggregationGroupBy');
 
                 if (mainMenu.value == "animal") {
@@ -269,9 +264,6 @@
             $result = executePlainSQL("SELECT $groupBy, count(*)
                                         FROM $table
                                         GROUP BY $groupBy");
-            //echo $table;
-            //echo $groupBy;
-            //echo "hi!";
 
             // only one row since entire table aggregation
             $rowTotal = OCI_Fetch_Array($total);
@@ -296,7 +288,6 @@
                     echo "<tr><td> Number of animals with diet type of $row[0]: $row[1]<br></td></tr>";
                 }
             }
-            //echo "<br> All which are $groupBy is $result items <br>";
 
         }
 
