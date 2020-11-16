@@ -965,12 +965,14 @@
             echo "</table>";
         }
 
-        function handleDeletionRequestion() {
+        function handleDeletionRequest() {
             global $db_conn;
 
             $idDelete = $_POST['deleteThis'];
-            echo "<br>" . $idDelete . "<br>"; // for debugging 
+        
             executePlainSQL("DELETE FROM Cargo WHERE CargoID = $idDelete");
+            echo "<br> Successfully Deleted <br>"; // for debugging 
+            OCICommit($db_conn);
         }
 
 
@@ -1017,7 +1019,7 @@
             } else if (array_key_exists('selection2', $_POST)) {
                 handleSelectionRequest2();
             } else if (array_key_exists('deletion', $_POST)) {
-                handleDeletionRequestion();
+                handleDeletionRequest();
             } else if (array_key_exists('insertQueryRequest', $_POST)) {
                 handleInsertRequest();
             }
