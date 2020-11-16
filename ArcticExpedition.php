@@ -255,10 +255,7 @@
             <input type="hidden" id="deletionRequest" name="deletionRequest">
             <input type="submit" name="deletion"></p>
         </form>
-<<<<<<< HEAD
         <hr />
-=======
->>>>>>> 56ae439bf511c6e81f6610d4d6aa7f4254e995fa
 
     </body>
 
@@ -539,7 +536,6 @@
             executePlainSQL("INSERT INTO eats VALUES(2142, 9999999, '01-OCT-2001')");
             executePlainSQL("INSERT INTO eats VALUES(1612, 3729123, '01-JUN-2001')");
 
-            echo "<br> done inserting <br>";
             OCICommit($db_conn);
         }
 
@@ -830,7 +826,7 @@
             $table = $_GET['table'];
 
             $result = executePlainSQL("SELECT * FROM $table");
-            while ($row = oci_fetch_row($result)) {
+            while (($row = oci_fetch_row($result)) != false) {
                 print "<pre>";
                 print_r($row);
                 print "</pre>";
@@ -1034,16 +1030,6 @@
             OCICommit($db_conn);
         }
 
-        function handleDeletionRequest() {
-            global $db_conn;
-
-            $idDelete = $_POST['deleteThis'];
-        
-            executePlainSQL("DELETE FROM Cargo WHERE CargoID = $idDelete");
-            echo "<br> Successfully Deleted <br>"; // for debugging 
-            OCICommit($db_conn);
-        }
-
 
         function printResult($result) { //prints results from a select statement
             echo "<br>DATA FROM TABLES:<br>";
@@ -1089,12 +1075,11 @@
                 handleResetRequest();
             } else if (array_key_exists('selection2', $_POST)) {
                 handleSelectionRequest2();
-            } else if (array_key_exists('deletion', $_POST)) {
-                handleDeletionRequest();
             } else if (array_key_exists('insertQueryRequest', $_POST)) {
                 handleInsertRequest();
             } else if (array_key_exists('deletion', $_POST)) {
                 handleDeletionRequest();
+
             }
             
 
