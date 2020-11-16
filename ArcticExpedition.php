@@ -85,6 +85,30 @@
         </form>
         <hr />
 
+        
+        <h2>Join</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+        <label for="Name"> Find all the names of the people who have went to the coordinates </label>
+            <select name="coordinate" id="coordinate">
+                <option value="85">85,132</option>
+                <option value="87">87,122</option>
+                <option value="86">86,128</option>
+                <option value="89">89,127</option>
+                </select>
+                <label> who are 
+            <select name="condition" id="condition">
+                <option value=">"> over </option>
+                <option value="<"> under </option> 
+                <option value="="> equal to </option>
+                <option value="<>"> not </option>
+            </select>
+            <label> the age
+                <input type="text" name="age"> <br /><br />
+            <input type="hidden" id="joinRequest" name="joinRequest">
+            <input type="submit" name="join"></p>
+        </form>
+        <hr />
+
         <h2>Select from Persons</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
             <label for="Name"> Identifying Features: </label>
@@ -209,6 +233,27 @@
             </select>
             <input type="hidden" id="projectionRequest" name="projectionRequest">
             <input type="submit" name="projection"></p>
+        </form>
+        <hr />
+
+        <h2>Delete lost or broken cargo</h2>
+        <label> Delete cargo entry and corresponding entries on Scientific Equipment</label>
+        <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            ID of broken Scientific Equipment:
+            <select name="deleteThis" id="deleteThis">
+            <option value="">--- Select ---</option>
+            <?php
+            connectToDB();
+            $result = executePlainSQL("SELECT CargoID FROM Cargo"); 
+                while ($row = oci_fetch_row($result)) {
+                    ?>
+                    <option value="<?php echo $row[0];?>"><?php echo $row[0];?> </option>
+                    <?php
+                }
+                ?>
+            </select>
+            <input type="hidden" id="deletionRequest" name="deletionRequest">
+            <input type="submit" name="deletion"></p>
         </form>
         <hr />
 
@@ -452,8 +497,13 @@
             executePlainSQL("INSERT INTO travelsTo VALUES(9119119, 85, 132, '28-JUN-2000')");
             executePlainSQL("INSERT INTO travelsTo VALUES(1191191, 87, 122, '27-MAY-2000')");
             executePlainSQL("INSERT INTO travelsTo VALUES(1111119, 89, 127, '15-DEC-2000')");
-            executePlainSQL("INSERT INTO travelsTo VALUES(9999999, 85, 130, '25-MAR-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(1111119, 85, 132, '15-DEC-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(9999999, 85, 132, '25-MAR-2000')");
             executePlainSQL("INSERT INTO travelsTo VALUES(3729123, 86, 128, '26-OCT-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(1212121, 87, 122, '26-OCT-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(2323232, 85, 132, '29-JUN-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(3434343, 89, 127, '29-JUN-2000')");
+            executePlainSQL("INSERT INTO travelsTo VALUES(4545454, 85, 132, '29-JUN-2000')");
             executePlainSQL("INSERT INTO studies VALUES(9119119, 8910209, 2323111)");
             executePlainSQL("INSERT INTO studies VALUES(9119119, 2342123, 1111111)");
             executePlainSQL("INSERT INTO studies VALUES(9119119, 7028311, 3123411)");
@@ -943,6 +993,42 @@
             
             echo "</table>";
         }
+        
+        function handleJoinRequest() {
+            global $db_conn;
+
+            $x = $_GET['coordinate'];
+            $cond = $_GET['condition'];
+            $age = $_GET['age'];
+
+            $result = executePlainSQL("SELECT p.Name 
+                                        FROM Person p, travelsTo t
+                                        WHERE t.Longitude = $x 
+                                            AND p.PersonID = t.PersonID
+                                            AND p.age $cond $age");
+
+            echo "<table>";
+            echo "<tr><th>Name</th></tr>";
+
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+
+            echo "</table>";
+            
+        }
+
+        
+        function handleDeletionRequest() {
+            global $db_conn;
+
+            $idDelete = $_POST['deleteThis'];
+        
+            executePlainSQL("DELETE FROM Cargo WHERE CargoID = $idDelete");
+            echo "<br> Successfully Deleted <br>"; // for debugging 
+            OCICommit($db_conn);
+        }
 
 
         function printResult($result) { //prints results from a select statement
@@ -970,6 +1056,8 @@
                 handleSelectionRequest();
             } else if (array_key_exists('projection', $_GET)) {
                 handleProjectionRequest();
+            } else if(array_key_exists('join', $_GET)){
+                handleJoinRequest(); 
             }
 
             disconnectFromDB();
@@ -989,6 +1077,8 @@
                 handleSelectionRequest2();
             } else if (array_key_exists('insertQueryRequest', $_POST)) {
                 handleInsertRequest();
+            } else if (array_key_exists('deletion', $_POST)) {
+                handleDeletionRequest();
             }
             
 
@@ -996,11 +1086,11 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])|| isset($_POST['deletionRequest'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest']) || isset($_GET['joinRequest'])) {
         handleGETRequest();
     }
-    ?>
+    ?> 
 </body>
 </html>
