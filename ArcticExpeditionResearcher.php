@@ -53,6 +53,10 @@
         </form>-->
 
         <h2>Update Plant Age</h2>
+        <form method="GET" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="showPlantIDsRequest" name="showPlantIDsRequest">
+            <input type="submit" value="show Plant IDs / age" name="showPlantIDs"></p>
+        </form>
         <form method="POST" action="ArcticExpeditionResearcher.php"> <!--refresh page when submitted-->
             PlantID: <input type="number" name="plantID"> <br>
             new Age: <input type="number" name="age"> <br>
@@ -319,6 +323,18 @@
             OCICommit($db_conn);
         }
 
+        function showPlantIDs() {
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT plantID, age
+                                        FROM plants");
+            
+            while ($row = OCI_Fetch_Array($result)) {
+                echo "PlantID: $row[0] Age: $row[1] <br>";
+            }
+            
+        }
+
         
         // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -330,6 +346,8 @@
                 findResearcherStudyingAllAnimals();
             } else if (array_key_exists('findCountResearchItems', $_GET)) {
                 findCountResearchItems();
+            } else if (array_key_exists('showPlantIDs', $_GET)) {
+                showPlantIDs();
             }
 
             disconnectFromDB();
@@ -350,7 +368,7 @@
 
     if (isset($_POST['updatePlantAgeSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest']) || isset($_GET["findCountResearchItemsRequest"])) {
+    } else if (isset($_GET['displayTupleRequest']) || isset($_GET['findResearcherStudyingAllAnimalsRequest']) || isset($_GET["findCountResearchItemsRequest"]) || ISSET(($_GET["showPlantIDsRequest"]))) {
         handleGETRequest();
     }
 		?>
