@@ -187,6 +187,26 @@
             <input type="submit" name="projection"></p>
         </form>
 
+        <h2>Delete lost or broken cargo</h2>
+        <label> Delete cargo entry and corresponding entries on Scientific Equipment</label>
+        <form method="POST" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+            ID of broken Scientific Equipment:
+            <select name="deleteThis" id="deleteThis">
+            <option value="">--- Select ---</option>
+            <?php
+            connectToDB();
+            $result = executePlainSQL("SELECT CargoID FROM Cargo"); 
+                while ($row = oci_fetch_row($result)) {
+                    ?>
+                    <option value="<?php echo $row[0];?>"><?php echo $row[0];?> </option>
+                    <?php
+                }
+                ?>
+            </select>
+            <input type="hidden" id="deletionRequest" name="deletionRequest">
+            <input type="submit" name="deletion"></p>
+        </form>
+
     </body>
 
 
@@ -425,6 +445,7 @@
             executePlainSQL("INSERT INTO eats VALUES(2142, 9999999, '01-OCT-2001')");
             executePlainSQL("INSERT INTO eats VALUES(1612, 3729123, '01-JUN-2001')");
 
+            echo "<br> done inserting <br>";
             OCICommit($db_conn);
         }
 
@@ -715,7 +736,7 @@
             $table = $_GET['table'];
 
             $result = executePlainSQL("SELECT * FROM $table");
-            while (($row = oci_fetch_row($result)) != false) {
+            while ($row = oci_fetch_row($result)) {
                 print "<pre>";
                 print_r($row);
                 print "</pre>";
@@ -863,6 +884,14 @@
             echo "</table>";
         }
 
+        function handleDeletionRequestion() {
+            global $db_conn;
+
+            $idDelete = $_POST['deleteThis'];
+            echo "<br>" . $idDelete . "<br>"; // for debugging 
+            executePlainSQL("DELETE FROM Cargo WHERE CargoID = $idDelete");
+        }
+
 
         function printResult($result) { //prints results from a select statement
             echo "<br>DATA FROM TABLES:<br>";
@@ -906,13 +935,15 @@
                 handleResetRequest();
             } else if (array_key_exists('selection2', $_POST)) {
                 handleSelectionRequest2();
+            } else if (array_key_exists('deletion', $_POST)) {
+                handleDeletionRequestion();
             }
 
             disconnectFromDB();
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown']) || isset($_POST['deletionRequest'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest'])) {
         handleGETRequest();
