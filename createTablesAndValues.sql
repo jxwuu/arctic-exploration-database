@@ -203,7 +203,7 @@ CREATE TABLE takesOut(
 	PRIMARY KEY (PersonID, VehicleID, Destination, Date),	
 	FOREIGN KEY (PersonID) REFERENCES Person
 		ON DELETE CASCADE,
-	FOREIGN KEY (VehicleID) REFERENCES ExplorationVehicle
+	FOREIGN KEY (VehicleID) REFERENCES ExplorationVehicle3
 		ON DELETE CASCADE
 )
 
@@ -731,6 +731,21 @@ VALUES(9999999, 34578, 'south of the abundance of shrubbery', '17-APR-2016')
 
 INSERT INTO takesOut 
 VALUES(3729123, 89723, 'near the west edge of the ice', '27-MAR-2017')
+
+INSERT INTO takesOut 
+VALUES(1234567, 66273, 'North of the edge of the sea', '27-JUN-2005')
+
+INSERT INTO takesOut 
+VALUES(1212121, 98127, 'east of the beach of with flowers', '19-APR-2014')
+
+INSERT INTO takesOut 
+VALUES(2323232, 34578, 'near the cliff with the orca whales', '18-JUN-2015')
+
+INSERT INTO takesOut 
+VALUES(3434343, 89723, 'south of the edge of the larger iceberg', '21-APR-2019')
+
+INSERT INTO takesOut 
+VALUES(4545454, 98127, 'west of the highest cliff', '14-MAY-2007')
 
 -- TransportedBy Table --
 
