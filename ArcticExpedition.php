@@ -1052,18 +1052,18 @@
         function handleGroupsByRequest() {
             global $db_conn;
 
-            $minxMaxAvg = $_POST['minMaxAvg'];
-            $result = executePlainSQL("SELECT ev.VehicleType, $minxMaxAvg
+            $minMaxAvg = $_POST['minMaxAvg'];
+            $result = executePlainSQL("SELECT ev.VehicleType, $minMaxAvg
             FROM Person p, takesOut t, explorationVehicle3 ev
             WHERE p.PersonID = t.PersonID AND t.VehicleID = ev.VehicleID
             GROUP BY ev.VehicleType");
 
                 $x = "";
-            if($minxMaxAvg == "MIN(p.age)") {
+            if($minMaxAvg == "MIN(p.age)") {
                 $x = "minimum";
-            } else if ($minxMaxAvg == "MAX(p.age)") {
+            } else if ($minMaxAvg == "MAX(p.age)") {
                 $x = "maximum";
-            } else if ($minxMaxAvg == "AVG(p.age)") {
+            } else if ($minMaxAvg == "AVG(p.age)") {
                 $x = "average";
             }
  
