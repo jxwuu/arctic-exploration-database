@@ -38,6 +38,9 @@
             </label>
             <label>Group: 
                 <select name="aggregationGroupBy" id="aggregationGroupBy"></select>
+                <br>
+            <header name="createNestedAggregationHeader" id="createNestedAggregationHeader"></header>
+                <select name="nestedQueryAggregation" id="nestedQueryAggregation"></select>
                 
 
             <input type="hidden" id="findCountResearchItemsRequest" name="findCountResearchItemsRequest">
@@ -72,6 +75,11 @@
 
             function displayAccordingly() {
                 removeDrop();
+                displayNestedGroupBy();
+                displayNestedHaving();
+            }
+
+            function displayNestedGroupBy() {
                 //Call mainMenu the main dropdown menu
                 var mainMenu = document.getElementById('mainMenu');
 
@@ -109,12 +117,56 @@
                 created = 1
             }
 
+            function displayNestedHaving() {
+                removeHeader();
+                //Call mainMenu the main dropdown menu
+                var mainMenu = document.getElementById('mainMenu');
+
+                //Create the new dropdown menu
+                var whereToPut = document.getElementById('nestedQueryAggregation');
+                var whereToPutHeader = document.getElementById('createNestedAggregationHeader');
+                if (mainMenu.value == "plants") { 
+                    //Create new header
+                    var headerNestedAggregation=document.createElement("h3");
+                    headerNestedAggregation.textContent="Turn into nested Aggregation";
+                    headerNestedAggregation.id="nestAggregationHeader";
+                    whereToPutHeader.appendChild(headerNestedAggregation);
+
+                    var optionNone=document.createElement("option");
+                    optionNone.text="--";
+                    optionNone.value=0;
+                    whereToPut.appendChild(optionNone);
+
+                    //Add an option called "find plants older than the avg age of all plants"
+                    var optionOlderThanAvg=document.createElement("option");
+                    optionOlderThanAvg.text="Older than average age";
+                    optionOlderThanAvg.value=1;
+                    whereToPut.appendChild(optionOlderThanAvg);
+                }
+            }
+
             function removeDrop() {
                 var d = document.getElementById('aggregationGroupBy');
                 while(d.options.length > 0) {
                     d.remove(0);
                 }
+
+                d = document.getElementById('nestedQueryAggregation');
+                while(d.options.length > 0) {
+                    d.remove(0);
+                }
             }
+
+            function removeHeader() {
+                d = document.getElementById('createNestedAggregationHeader');
+                console.log(d.childElementCount);
+                
+                if (d.childElementCount){
+                    let child = document.getElementById('nestAggregationHeader');
+                    d.removeChild(child);
+                }
+            }
+
             
         </script>
 
@@ -250,7 +302,7 @@
 
         function findResearcherStudyingAllAnimals() {
             global $db_conn;
-            
+
             $result = executePlainSQL("SELECT p.name
                                         FROM Person p
                                         WHERE p.personID in (
@@ -277,17 +329,37 @@
 
             $table = $_GET['mainMenu'];
             $groupBy = $_GET['aggregationGroupBy'];
+            $havingNested = $_GET['nestedQueryAggregation'];
 
             $total = executePlainSQL("SELECT count(*)
                                         FROM $table");
 
-            $result = executePlainSQL("SELECT $groupBy, count(*)
+            if ($havingNested) {
+                $result = executePlainSQL("SELECT $groupBy, count(*)
+                                        FROM $table
+                                        GROUP BY $groupBy
+                                        HAVING $groupBy > (SELECT avg(age)
+                                                           FROM plants)");
+            } else {
+                $result = executePlainSQL("SELECT $groupBy, count(*)
                                         FROM $table
                                         GROUP BY $groupBy");
+            }
 
             // only one row since entire table aggregation
             $rowTotal = OCI_Fetch_Array($total);
             echo "Total count in $table: " . $rowTotal[0] . "<br>";
+            echo "<br>";
+
+            
+            // show average age of plant
+            if ($havingNested) {
+                $rowAvg = executePlainSQL("SELECT avg(age) FROM plants");
+                $rowAvg = OCI_Fetch_Array($rowAvg);
+                echo "Average plant age is: $rowAvg[0] years <br>";
+                echo "<br>";
+            }
+            
 
             if ($groupBy == "Vertebrate" || $groupBy == "Fragile") {
                 while ($row = OCI_Fetch_Array($result)) {
