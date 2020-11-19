@@ -9,6 +9,14 @@ FROM Person
 WHERE $attribute2 $condition $number 
 AND $attribute3 $condition2 $number2
 
+-- INSERT QUERY -- 
+
+-- Insert query from Persons -- 
+/*  Allows the user to indicate a unique $PID (PersonID), $Age, $Name, 
+    $Gender, $Weight, and $Height of a person that they would like to add
+    to the database, where $PID is the primary key of the Person table */
+INSERT INTO Person 
+VALUES($PID, $AGE, $NAME, $GENDER, $WEIGHT, $HEIGHT)
 
 -- DELETION QUERY --
 
@@ -38,6 +46,17 @@ least 3 and at most 5 attributes.*/
 SELECT $attribute1, $attribute2, $attribute2, $attribute5, $attribute4
 FROM Person
 
+-- JOIN QUERY -- 
+
+--Join Persons and TravelsTo -- 
+/* Finds the names of people who are $condition $age, where $condition is 
+  >,=,<,<> and $age is a number specified by the user, who have went to $coordinates where coordinates is 
+  is a list that the user can choose from. */
+  SELECT p.Name 
+  FROM Person p, travelsTo t
+  WHERE t.Longitude = $coordinate 
+  AND p.PersonID = t.PersonID
+  AND p.age $condition $age
 
 -- AGGREGATION WITH GROUP BY QUERY --
 
@@ -49,6 +68,18 @@ FROM Person p, takesOut t, explorationVehicle3 ev
 WHERE p.PersonID = t.PersonID 
 AND t.VehicleID = ev.VehicleID
 GROUP BY ev.VehicleType
+
+-- AGGREGATION WITH HAVING QUERY -- 
+
+-- Find the Foods that have been Eaten by more than x people -- 
+/* Finds the names of foods that have been eaten by more than 
+  $number people, where $number is specified by user input */
+
+SELECT f.FoodType, count(*)
+FROM Food f, eats e
+WHERE e.CargoID = f.CargoID
+GROUP BY f.FoodType
+HAVING count(*) >= $number
 
 
 -- NESTED AGGREGATION WITH GROUP BY --

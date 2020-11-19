@@ -86,7 +86,7 @@
         <hr />
 
         
-        <h2>Join</h2>
+        <h2>Join Persons and TravelsTo</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
         <label for="Name"> Find all the names of the people who have went to the coordinates </label>
             <select name="coordinate" id="coordinate">
@@ -272,6 +272,25 @@
         </form>
         <hr />
 
+        <h2>Find the Foods that have been Eaten by more than x people</h2>
+        <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
+        What types of food have been eaten by 
+            <select name="number" id="number">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <label> people. 
+            <input type="hidden" id="havingRequest" name="havingRequest">
+            <input type="submit" name="having"></p>
+        </form>
+        <hr />
+
     </body>
 
 
@@ -358,7 +377,7 @@
         function connectToDB() {
             global $db_conn;
 
-            $db_conn = OCILogon("ora_benson0", "a28598183", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_jxwu", "a89879514", "dbhost.students.cs.ubc.ca:1522/stu");
 
 
             if ($db_conn) {
@@ -452,6 +471,8 @@
             executePlainSQL("INSERT INTO Cargo VALUES(1521)");
             executePlainSQL("INSERT INTO Cargo VALUES(2142)");
             executePlainSQL("INSERT INTO Cargo VALUES(1612)");
+            executePlainSQL("INSERT INTO Cargo VALUES(1999)");
+            executePlainSQL("INSERT INTO Cargo VALUES(2000)");
             executePlainSQL("INSERT INTO scientificEquipment VALUES(8972, 82731, 'couple of scratches', 1, 'erlenmeyer flask')"); 
             executePlainSQL("INSERT INTO scientificEquipment VALUES(3487, 23487, 'chipped', 0, 'bunsen burner')");
             executePlainSQL("INSERT INTO scientificEquipment VALUES(3232, 31203, 'new', 0, 'magnifying glass')");
@@ -466,7 +487,9 @@
             executePlainSQL("INSERT INTO food VALUES(3434, 'SPAM Classic', '20-NOV-2017', '28-SEP-2023', 174)");
             executePlainSQL("INSERT INTO food VALUES(1521,'Premium Plus Salted Crackers', '17-JAN-2020', '29-JAN-2020', 90)");
             executePlainSQL("INSERT INTO food VALUES(2142, 'Heinz Beans', '22-MAR-2019', '10-OCT-2024', 155)");
-            executePlainSQL("INSERT INTO food VALUES(1612, 'Green Giant Whole Kernel Sweet Corn', '10-JAN-2020', '01-JUN-2021', 130)");    
+            executePlainSQL("INSERT INTO food VALUES(1612, 'Green Giant Whole Kernel Sweet Corn', '10-JAN-2020', '01-JUN-2021', 130)"); 
+            executePlainSQL("INSERT INTO food VALUES(1999, 'Haitai Original Crackers', '22-MAR-2019', '10-OCT-2024', 140)");
+            executePlainSQL("INSERT INTO food VALUES(2000, 'Orion Kkobuk Corn Chips', '10-JAN-2020', '01-JUN-2021', 250)");      
             executePlainSQL("INSERT INTO shipModel VALUES('Cruise Ship Model-AB', 1114, 12)");
             executePlainSQL("INSERT INTO shipModel VALUES('Research Ship Model-BC', 134, 20)");
             executePlainSQL("INSERT INTO shipModel VALUES('Bulk Carrier Model-HC', 130, 21)");
@@ -550,11 +573,32 @@
             executePlainSQL("INSERT INTO transportedBy VALUES('PCSUM', 1111119, 3232)");
             executePlainSQL("INSERT INTO transportedBy VALUES('ISCS', 9999999, 1111)");
             executePlainSQL("INSERT INTO transportedBy VALUES('USON', 3729123, 9872)"); 
-            executePlainSQL("INSERT INTO eats VALUES(1234, 9119119, '01-JUN-2010')");
             executePlainSQL("INSERT INTO eats VALUES(3434, 1191191, '19-AUG-2019')");
+            executePlainSQL("INSERT INTO eats VALUES(2142, 1191191, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 1191191, '01-OCT-2001')");
             executePlainSQL("INSERT INTO eats VALUES(1521, 1111119, '27-JUL-2007')");
             executePlainSQL("INSERT INTO eats VALUES(2142, 9999999, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1999, 9999999, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 9999999, '27-JUL-2007')");
             executePlainSQL("INSERT INTO eats VALUES(1612, 3729123, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(2000, 3729123, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 3729123, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1612, 1212121, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(2142, 1212121, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 1212121, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1612, 1234567, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 1234567, '27-JUL-2007')");
+            executePlainSQL("INSERT INTO eats VALUES(2142, 1234567, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(3434, 9119119, '19-AUG-2019')");
+            executePlainSQL("INSERT INTO eats VALUES(1234, 9119119, '01-JUN-2010')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 9119119, '01-JUN-2010')");
+            executePlainSQL("INSERT INTO eats VALUES(2000, 9119119, '01-JUN-2010')");
+            executePlainSQL("INSERT INTO eats VALUES(1521, 2323232, '27-JUL-2007')");
+            executePlainSQL("INSERT INTO eats VALUES(2142, 2323232, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1612, 2323232, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(3434, 2323232, '01-OCT-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(1234, 2323232, '01-JUN-2001')");
+            executePlainSQL("INSERT INTO eats VALUES(2000, 2323232, '01-JUN-2001')");
 
             echo "<br> done inserting <br>";
             OCICommit($db_conn);
@@ -1016,15 +1060,15 @@
         function handleJoinRequest() {
             global $db_conn;
 
-            $x = $_GET['coordinate'];
-            $cond = $_GET['condition'];
+            $coordinate = $_GET['coordinate'];
+            $condition = $_GET['condition'];
             $age = $_GET['age'];
 
             $result = executePlainSQL("SELECT p.Name 
                                         FROM Person p, travelsTo t
-                                        WHERE t.Longitude = $x 
+                                        WHERE t.Longitude = $coordinate 
                                             AND p.PersonID = t.PersonID
-                                            AND p.age $cond $age");
+                                            AND p.age $condition $age");
 
             echo "<table>";
             echo "<tr><th>Name</th></tr>";
@@ -1036,6 +1080,28 @@
 
             echo "</table>";
             
+        }
+
+        function handleHavingRequest(){
+            global $db_conn;
+
+            $number = $_GET['number'];
+
+            $result = executePlainSQL("SELECT f.FoodType, count(*)
+                                        FROM Food f, eats e
+                                        WHERE e.CargoID = f.CargoID
+                                        GROUP BY f.FoodType
+                                        HAVING count(*) >= $number");
+
+            echo "<table>";
+            echo "<tr><th>The food that was eaten by $number people is </th></tr>";
+
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row["FOODTYPE"] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+
+            echo "</table>";
         }
 
         
@@ -1102,6 +1168,9 @@
                 handleProjectionRequest();
             } else if(array_key_exists('join', $_GET)){
                 handleJoinRequest(); 
+            } 
+            else if(array_key_exists('having', $_GET)){
+                handleHavingRequest(); 
             }
 
             disconnectFromDB();
@@ -1135,7 +1204,7 @@
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['initializeTables']) || isset($_POST['selectionDropDown'])|| isset($_POST['deletionRequest']) ||
         isset($_POST['groupByRequest'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['projectionRequest']) || isset($_GET['joinRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['displayTupleRequest']) || isset($_GET['selectionRequest']) || isset($_GET['havingRequest']) ||isset($_GET['projectionRequest']) || isset($_GET['joinRequest'])) {
         handleGETRequest();
     }
     ?> 
