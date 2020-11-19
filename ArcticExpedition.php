@@ -1094,7 +1094,7 @@
                                         HAVING count(*) >= $number");
 
             echo "<table>";
-            echo "<tr><th>The food that was eaten by $number people is </th></tr>";
+            echo "<tr><th>The food that was eaten by more than $number people is </th></tr>";
 
 
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
