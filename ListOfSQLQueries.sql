@@ -127,3 +127,4 @@ SELECT Count(*) FROM Person
 -- show Plant IDS / age --
 SELECT plantID, age
 FROM plants
+
