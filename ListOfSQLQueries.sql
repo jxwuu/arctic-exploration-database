@@ -18,18 +18,18 @@ AND $attribute3 $condition2 $number2
 INSERT INTO Person 
 VALUES($PID, $AGE, $NAME, $GENDER, $WEIGHT, $HEIGHT)
 
--- DELETION QUERY --
+-- UPDATE OPERATION --
 
--- Delete lost or broken cargo --
+-- Update plant age --
 /*$newPlantAge is set by user to indicate new age of plant. $plantID is primary key of plant
 table which is also specified by user to determine which plant to update.*/
 UPDATE plants 
 SET age=$newPlantAge 
 WHERE plantID=$plantID
 
--- UPDATE OPERATION --
+-- DELETION QUERY --
 
--- Update plant age --
+-- Delete lost or broken cargo --
 /*$idDelete is the cargoID specified by the user to delete
   Tuples with the cargoID is deleted in relevant tables: 
   Cargo, Food, ScientificEquipment, transportedBy, eats*/
