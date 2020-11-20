@@ -86,13 +86,14 @@ HAVING count(*) >= $number
 
 -- Find Researcher(s) Who is Studying every Animal on Record --
 /*$groupBy, $table is specified by user. $table must be chosen first by user, which then prompts another drop down menu 
-to appear which presents $groupBy attributes which corresponds only to that current table. Finds the total count of 
-animals grouping by either diet or vertebrate. Finds the total count of plants grouping by plants with the same age.
-Finds the total count of scientific equipment grouping by if fragile.*/
+to appear which presents $groupBy attributes which corresponds only to that current table. This query returns all groups
+of plants by age which are greater than the average age of all plants*/
 
 SELECT $groupBy, count(*)
 FROM $table
 GROUP BY $groupBy
+HAVING $groupby > (SELECT avg(age)
+                     FROM plants)
 
 
 -- DIVISION --
