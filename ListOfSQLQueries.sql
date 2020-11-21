@@ -87,13 +87,22 @@ HAVING count(*) >= $number
 -- Find Researcher(s) Who is Studying every Animal on Record --
 /*$groupBy, $table is specified by user. $table must be chosen first by user, which then prompts another drop down menu 
 to appear which presents $groupBy attributes which corresponds only to that current table. This query returns all groups
+<<<<<<< Updated upstream
 of plants by age which are greater than the average age of all plants*/
+=======
+of plants by age which are greater than the average age of all plants.*/
+>>>>>>> Stashed changes
 
 SELECT $groupBy, count(*)
 FROM $table
 GROUP BY $groupBy
+<<<<<<< Updated upstream
 HAVING $groupby > (SELECT avg(age)
                      FROM plants)
+=======
+HAVING $groupBy > (SELECT avg(age)
+                    FROM plants)
+>>>>>>> Stashed changes
 
 
 -- DIVISION --
@@ -127,3 +136,4 @@ SELECT Count(*) FROM Person
 -- show Plant IDS / age --
 SELECT plantID, age
 FROM plants
+
