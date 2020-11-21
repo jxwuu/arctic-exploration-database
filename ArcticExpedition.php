@@ -274,7 +274,7 @@
 
         <h2>Find the Foods that have been Eaten by more than x people</h2>
         <form method="GET" action="ArcticExpedition.php"> <!--refresh page when submitted-->
-        What types of food have been eaten by 
+        What types of food have been eaten by more than 
             <select name="number" id="number">
                 <option value="1">1</option>
                 <option value="2">2</option>
